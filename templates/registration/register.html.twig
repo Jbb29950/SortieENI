@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscrivez-vous{% endblock %}
+
+{% block body %}
+    <div class="titre_formulaire">
+        <h1>Formulaire d'inscription</h1>
+    </div>
+<div class="formulaire_inscription">
+    {{ form_start(registrationForm) }}
+    {{ form_row(registrationForm.nom) }}
+    {{ form_row(registrationForm.prenom) }}
+    {{ form_row(registrationForm.telephone) }}
+    {{ form_row(registrationForm.email) }}
+    {{ form_row(registrationForm.campus) }}
+    {{ form_row(registrationForm.plainPassword, {
+            label: 'Password'
+        }) }}
+
+        <div class="bouton_valider">
+        <button type="submit" class="btn">Enregistrer</button>
+        </div>
+    {{ form_end(registrationForm) }}
+</div>
+{% endblock %}
