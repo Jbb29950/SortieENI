@@ -1,0 +1,26 @@
+.nav {
+    display: block;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+.nav-link{
+    display:inline;
+    float: right;
+}
+.nav-link a{
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+.logo{
+    display: block;
+}
+header{
+    display: flex;
+    justify-content: space-between;
+    background-color: gray;
+}
