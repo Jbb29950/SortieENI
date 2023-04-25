@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CampusController!{% endblock %}
+
+{% block body %}
+    <h1>Page des campus ✅</h1>
+<div>
+    {{ form_start(campusType) }}
+    {{ form_row(campusType.nom) }}
+    <button type="submit" class="btn">Ajouter</button>
+    {{ form_end(campusType) }}
+
+
+</div>
+
+{% endblock %}

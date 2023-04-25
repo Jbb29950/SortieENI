@@ -12,7 +12,11 @@
     {{ form_row(registrationForm.prenom) }}
     {{ form_row(registrationForm.telephone) }}
     {{ form_row(registrationForm.email) }}
-    {{ form_row(registrationForm.campus) }}
+    <select id="campus" name="campus">
+    {% for campus in Campus %}
+        <option value="{{ campus.nom }}">{{ campus.nom }}</option>
+    {% endfor %}
+    </select>
     {{ form_row(registrationForm.plainPassword, {
             label: 'Password'
         }) }}

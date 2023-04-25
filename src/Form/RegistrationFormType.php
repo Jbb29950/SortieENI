@@ -4,6 +4,9 @@ namespace App\Form;
 
 use App\Entity\Campus;
 use App\Entity\Participant;
+use App\Repository\CampusRepository;
+use http\Env\Response;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -14,15 +17,20 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class RegistrationFormType extends AbstractType
-{
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+{public function __construct(private CampusRepository $campusRepo)
+{}
+
+    public function buildForm(FormBuilderInterface $builder,  array $options):void
     {
+
         $builder
             ->add('nom')
             ->add('prenom')
             ->add('email')
             ->add('telephone')
-            ->add('campus')
+
+
+
 
             #->add('agreeTerms', CheckboxType::class, [
               #  'mapped' => false,
