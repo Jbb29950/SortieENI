@@ -1,10 +1,12 @@
 <?php
 
-
 namespace App\Controller;
 
 use App\Entity\Sortie;
+use App\Form\AnnulerSortieType;
 use App\Form\CreerSortieType;
+use App\Repository\SortieRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,27 +15,85 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SortieController extends AbstractController
 {
-
     #[Route('/sortie/creer', name: 'creer_Sortie')]
-    public function creerSortie(Request $request): Response
+
+    public function creerSortie(Request $request, EntityManagerInterface $entityManager): Response
     {
         $sortie = new Sortie();
-        $form = $this->createForm(CreerSortieType::class, $sortie);
+        $creerSortieForm = $this->createForm(CreerSortieType::class, $sortie);
 
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
+        $creerSortieForm->handleRequest($request);
+        if ($creerSortieForm->isSubmitted() && $creerSortieForm->isValid()) {
             // Enregistrer la sortie dans la base de données
-            $entityManager = $this->getDoctrine()->getManager();
+
             $entityManager->persist($sortie);
             $entityManager->flush();
 
             $this->addFlash('success', 'La sortie a été créée avec succès.');
-            return $this->redirectToRoute('page_d_accueil');
+            return $this->redirectToRoute('app_home');
         }
 
         return $this->render('sortie/creerSortie.html.twig', [
-            'form' => $form->createView(),
+            'creerSortieForm' => $creerSortieForm->createView(),
         ]);
     }
+
+    #[Route ('/sortie/{id}', name: 'afficher_Sortie')]
+
+    public function afficherSortie(Sortie $sortie): Response
+    {
+        return $this->render('sortie/afficherSortie.html.twig', [
+            'sortie' => $sortie,
+        ]);
+    }
+
+
+    #[Route('/sortie/modifier/{id}', name: 'modifier_Sortie')]
+
+    public function modifierSortie(Request $request, Sortie $sortie, EntityManagerInterface $entityManager): Response
+    {
+        $modifierSortieForm = $this->createForm(ModifierSortieType::class, $sortie);
+        $modifierSortieForm->handleRequest($request);
+
+        if ($modifierSortieForm->isSubmitted() && $modifierSortieForm->isValid()) {
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Sortie modifiée avec succès.');
+
+            return $this->redirectToRoute('app_home', ['id' => $sortie->getId()]);
+        }
+
+        return $this->render('sortie/modifierSortie.html.twig', [
+            'sortie' => $sortie,
+            'modifierSortieForm' => $modifierSortieForm->createView(),
+        ]);
+    }
+    #[Route('/sortie/annuler/{id}', name: 'annuler_Sortie')]
+
+    public function annulerSortie(Request $request, EntityManagerInterface $entityManager, SortieRepository $sortieRepository, int $id): Response
+    {
+        $sortie = $sortieRepository->find($id);
+
+        $annulerSortieForm = $this->createForm(AnnulerSortieType::class);
+
+        $annulerSortieForm->handleRequest($request);
+
+        if ($annulerSortieForm->isSubmitted() && $annulerSortieForm->isValid()) {
+            $motif = $annulerSortieForm->get('motif')->getData();
+
+            $sortie->setEtat('Annulée');
+            $entityManager->flush();
+
+            $this->addFlash('success', 'La sortie a été annulée avec succès.');
+
+            return $this->redirectToRoute('app_home', ['id' => $sortie->getId()]);
+        }
+
+        return $this->render('sortie/annulerSortie.html.twig', [
+            'form' => $annulerSortieForm->createView(),
+            'sortie' => $sortie,
+        ]);
+    }
+
 }
 
