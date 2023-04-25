@@ -1,6 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Créer une sortie{% endblock %}
+{% block title %}
+
+    Créer une sortie | {{ parent() }}
+
+{% endblock %}
 
 {% block body %}
 
@@ -8,17 +12,17 @@
     <h1>Créer une sortie</h1>
 
 
-    {{ form_start(form) }}
-    {{ form_row(form.nom) }}
-    {{ form_row(form.dateHeureDebut) }}
-    {{ form_row(form.duree) }}
-    {{ form_row(form.dateLimiteInscription) }}
-    {{ form_row(form.nbInscriptionsMax) }}
-    {{ form_row(form.infosSortie) }}
-    {{ form_row(form.participants) }}
-    {{ form_row(form.organisateur) }}
-    {{ form_row(form.lieu) }}
-    {{ form_row(form.etat) }}
+    {{ form_start(creerSortieForm) }}
+    {{ form_row(creerSortieForm.nom) }}
+    {{ form_row(creerSortieForm.dateHeureDebut) }}
+    {{ form_row(creerSortieForm.duree) }}
+    {{ form_row(creerSortieForm.dateLimiteInscription) }}
+    {{ form_row(creerSortieForm.nbInscriptionsMax) }}
+    {{ form_row(creerSortieForm.infosSortie) }}
+    {{ form_row(creerSortieForm.participants) }}
+    {{ form_row(creerSortieForm.organisateur) }}
+    {{ form_row(creerSortieForm.lieu) }}
+    {{ form_row(creerSortieForm.etat) }}
 
     <button type="submit" class="btn">Enregistrer</button>
     <button type="submit" class="btn">Publier la sortie</button>
@@ -26,7 +30,7 @@
 
 
 
-    {{ form_end(form) }}
+    {{ form_end(creerSortieForm) }}
 
 
 {% endblock %}
