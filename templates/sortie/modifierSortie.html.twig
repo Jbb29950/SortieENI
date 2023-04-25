@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier la sortie {{ sortie.nom }}{% endblock %}
+
+{% block body %}
+
+    <h1>Modifier la sortie "{{ sortie.nom }}"</h1>
+
+    {{ form_start(modifierSortieForm) }}
+    {{ form_row(modifierSortieForm.nom) }}
+    {{ form_row(modifierSortieForm.dateHeureDebut) }}
+    {{ form_row(modifierSortieForm.duree) }}
+    {{ form_row(modifierSortieForm.dateLimiteInscription) }}
+    {{ form_row(modifierSortieForm.nbInscriptionsMax) }}
+    {{ form_row(modifierSortieForm.infosSortie) }}
+    {{ form_row(modifierSortieForm.participants) }}
+    {{ form_row(modifierSortieForm.organisateur) }}
+    {{ form_row(modifierSortieForm.lieu) }}
+    {{ form_row(modifierSortieForm.etat) }}
+
+
+
+    <button type="submit" class="btn">Enregistrer</button>
+    <button type="submit" class="btn">Publier la sortie</button>
+    <button type="submit" class="btn">Annuler</button>
+
+    {{ form_end(modifierSortieForm) }}
+
+{% endblock %}
+
