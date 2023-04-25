@@ -16,6 +16,7 @@ input{
     padding-top: 15px;
     padding-bottom:15px;
     padding-left: 5px;
+    border-radius: 20px;
 }
 .titre_formulaire{
     text-align: center;
@@ -39,7 +40,7 @@ button{
 
 .bouton_valider{
     text-justify: auto;
-    background-color: greenyellow;
+
     align-items: center;
 
 }
