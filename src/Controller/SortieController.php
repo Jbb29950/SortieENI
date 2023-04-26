@@ -27,11 +27,10 @@ class SortieController extends AbstractController
         $creerSortieForm->handleRequest($request);
 
         if ($creerSortieForm->isSubmitted() && $creerSortieForm->isValid()) {
-            //Récupérer l'utilisateur connecté avec le repo
-            $user = $participantRepository->findOneBy(['id'=>$this->getUser()->getUserIdentifier()]);
+
 
             //Enregistrer l'utilisateur comme organisateur de la sortie
-            $sortie->setOrganisateur($user);
+            $sortie->setOrganisateur($this->getUser());
 
             // Enregistrer la sortie dans la base de données
             $entityManager->persist($sortie);
