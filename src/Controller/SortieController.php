@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Form\AnnulerSortieType;
 use App\Form\CreerSortieType;
+use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
+use Controller\ModifierSortieType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,15 +20,20 @@ class SortieController extends AbstractController
 {
     #[Route('/sortie/creer', name: 'creer_Sortie')]
 
-    public function creerSortie(Request $request, EntityManagerInterface $entityManager): Response
+    public function creerSortie(Request $request, EntityManagerInterface $entityManager, ParticipantRepository $participantRepository): Response
     {
         $sortie = new Sortie();
         $creerSortieForm = $this->createForm(CreerSortieType::class, $sortie);
-
         $creerSortieForm->handleRequest($request);
-        if ($creerSortieForm->isSubmitted() && $creerSortieForm->isValid()) {
-            // Enregistrer la sortie dans la base de données
 
+        if ($creerSortieForm->isSubmitted() && $creerSortieForm->isValid()) {
+            //Récupérer l'utilisateur connecté avec le repo
+            $user = $participantRepository->findOneBy(['id'=>$this->getUser()->getUserIdentifier()]);
+
+            //Enregistrer l'utilisateur comme organisateur de la sortie
+            $sortie->setOrganisateur($user);
+
+            // Enregistrer la sortie dans la base de données
             $entityManager->persist($sortie);
             $entityManager->flush();
 
