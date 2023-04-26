@@ -1,0 +1,10 @@
+<h1>Bonjour
+    {% if sortie.organisateur.pseudo %}
+    {{ sortie.organisateur.pseudo }}
+    {% else %}
+    {{ sortie.organisateur.nom }}
+    {% endif %}!</h1>
+
+<p>
+    <h1>Vous êtes organisateur d'une sortie nouvellement crée. Bonne chance avec {{ sortie.nom }}. </h1>
+</p>
