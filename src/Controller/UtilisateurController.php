@@ -1,9 +1,10 @@
 <?php
 
-namespace Controller;
+namespace App\Controller;
 
 use App\Form\RegistrationFormType;
 use App\Repository\ParticipantRepository;
+use App\Service\Peupler;
 use Cassandra\Type\UserType;
 use Doctrine\Persistence\ObjectManager;
 use http\Client\Curl\User;
@@ -15,12 +16,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class UtilisateurController extends AbstractController
 {
     #[Route('/utilisateur', name: 'app_utilisateur')]
-    public function index(): Response
+    public function editionProfil(ParticipantRepository $pr): Response
     {
-        return $this->render('utilisateur/index.html.twig', [
+        return $this->render('utilisateur/editionProfil.html.twig', [
             'controller_name' => 'UtilisateurController',
+            'participant'=>$pr->findOneBy(['id'=>$this->getUser()->getUserIdentifier()])
+
         ]);
     }
-
 
 }

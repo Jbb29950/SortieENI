@@ -4,7 +4,18 @@
 
 
     <div class="container">
-        <h1>Formulaire de modificatiion du profil</h1>
+        <h1>Votre profil</h1>
+
+                                {% if app.user %}
+                                    {{ dump(participant) }}
+
+                                     <h2>Votre nom : {{ participant.nom }}</h2>
+                                    <h2>Votre prénom : {{ participant.prenom}}</h2>
+                                    <h2>Votre telephone : {{ participant.telephone }}</h2>
+                                    <h2>Votre email : {{ participant.email }}</h2>
+                                    <h2>Votre campus : {{ participant.campus }}</h2>
+
+                                 {% endif %}
 
     </div>
 {% endblock %}
