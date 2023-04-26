@@ -18,8 +18,6 @@ class CreerSortieType extends AbstractType
             ->add('dateLimiteInscription')
             ->add('nbInscriptionsMax')
             ->add('infosSortie')
-            ->add('participants')
-            ->add('organisateur')
             ->add('lieu')
             ->add('etat')
         ;

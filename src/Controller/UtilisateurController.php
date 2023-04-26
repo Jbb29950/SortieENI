@@ -1,6 +1,6 @@
 <?php
 
-namespace Controller;
+namespace App\Controller;
 
 use App\Form\RegistrationFormType;
 use App\Repository\ParticipantRepository;
