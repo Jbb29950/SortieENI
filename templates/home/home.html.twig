@@ -8,7 +8,10 @@
     {% if is_granted('ROLE_USER') %}
     <h1>Bienvenue {{ app.user.prenom}} <br>
         sur les sorties de l'ENI!</h1>
+    {% else %}
+        <h1>Bienvenue sur les sorties ENI !</h1>
 {% endif %}
+
 
 </div>
 {% endblock %}
