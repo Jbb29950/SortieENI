@@ -47,3 +47,16 @@ button{
 button:hover{
     color: red;
 }
+
+.container_profil h1 {
+    text-align: center;
+}
+
+.modifier_profil{
+    width:100px;
+    height: 50px;
+    font-size: 20px;
+}
+.profil h2{
+    text-align: center;
+}

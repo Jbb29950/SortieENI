@@ -3,21 +3,22 @@
 {% block body %}
 
 
-    <div class="container">
-        <h1>Votre profil</h1>
-
-                                {% if app.user %}
-                                    {{ dump(participant) }}
-
-                                     <h2>Votre nom : {{ participant.nom }}</h2>
-                                    <h2>Votre prénom : {{ participant.prenom}}</h2>
-                                    <h2>Votre telephone : {{ participant.telephone }}</h2>
-                                    <h2>Votre email : {{ participant.email }}</h2>
-                                    <h2>Votre campus : {{ participant.campus }}</h2>
-
-                                 {% endif %}
-
-    </div>
+    <section class="container_profil">
+        <h1 class="titre_profil">Votre profil</h1>
+               {% if app.user %}
+                   <div class="profil">
+                   <h2>Votre nom : {{ app.user.nom }}</h2>
+                   <h2>Votre prénom : {{ app.user.prenom}}</h2>
+                   <h2>Votre telephone : {{ app.user.telephone }}</h2>
+                   <h2>Votre email : {{ app.user.email }}</h2>
+                   <h2>Votre campus : {{ app.user.campus.nom }}</h2>
+                       {% if app.user.pseudo %}
+                   <h2>Votre pseudo : {{ app.user.pseudo }}</h2>
+                        {% endif %}
+                       <button class="modifier_profil"  href="#">Modifier votre profil</button>
+                   </div>
+               {% endif %}
+    </section>
 {% endblock %}
 
 
