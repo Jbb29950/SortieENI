@@ -15,7 +15,7 @@
                        {% if app.user.pseudo %}
                    <h2>Votre pseudo : {{ app.user.pseudo }}</h2>
                         {% endif %}
-                       <button class="modifier_profil"  href="#">Modifier votre profil</button>
+                       <a class="btn btn-success" href="{{ path('modifier_profil') }}" >Modifier votre profil</a>
                    </div>
                {% endif %}
     </section>
