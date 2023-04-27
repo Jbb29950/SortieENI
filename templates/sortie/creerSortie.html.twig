@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-
+{% block stylesheets %} <link rel="stylesheet" href="{{ asset('css/form.css') }}">{% endblock %}
 {% block title %}
 
 
@@ -25,6 +25,7 @@
     {{ form_row(creerSortieForm.infosSortie) }}
     {{ form_row(creerSortieForm.lieu) }}
     {{ form_row(creerSortieForm.etat) }}
+
     </div>
 
     <div class="bouton_valider">

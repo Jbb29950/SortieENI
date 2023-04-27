@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-
+{% block stylesheets %} <link rel="stylesheet" href="{{ asset('css/form.css') }}">{% endblock %}
 {% block title %}Inscrivez-vous{% endblock %}
 
 {% block body %}
@@ -12,9 +12,14 @@
     {{ form_row(registrationForm.prenom) }}
     {{ form_row(registrationForm.telephone) }}
     {{ form_row(registrationForm.email) }}
+    <label for="campus">Campus</label>
+
     <select id="campus" name="campus">
+
     {% for campus in Campus %}
-        <option value="{{ campus.nom }}">{{ campus.nom }}</option>
+
+        <option  value="{{ campus.nom }}">{{ campus.nom }}</option>
+
     {% endfor %}
     </select>
     {{ form_row(registrationForm.plainPassword, {
