@@ -19,7 +19,7 @@ class UpdateProfileType extends AbstractType
             ->add('prenom')
             ->add('telephone')
             ->add('Pseudo')
-            ->add('sortie')
+            #->add('sortie')
             #->add('password')
             #->add('administrateur')
             #->add('actif')
