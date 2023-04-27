@@ -20,13 +20,6 @@ class Mailer
 
     public function nouveauParticipant(Sortie $sortie, Participant $participant) :void{
         //Envoie à l'organisateur une notification de nouveau participant
-        //todo créer fonction
-
-        //if ($participant->getPseudo()){
-        //    $inscrit = $participant->getPseudo();
-        //}else{
-        //    $inscrit = $participant->getNom();
-        //}
         $message = new TemplatedEmail();
         $message->from(self::ENVOYEUR)
             ->to($sortie->getOrganisateur()->getEmail())
@@ -42,7 +35,6 @@ class Mailer
 
     public function nouvelleSortie(Sortie $sortie):void{
         //Envoie un mail à l'organisateur d'une sortie nouvellement crée
-        //todo créer fonction
         $message = new TemplatedEmail();
         $message->from(self::ENVOYEUR)
             ->to($sortie->getOrganisateur()->getEmail())
@@ -57,7 +49,6 @@ class Mailer
 
     public function annulationSortie(Sortie $sortie):void{
         //Envoie un mail d'annulation à tout les participants de la sortie
-        //todo créer fonction
 
         foreach ($sortie->getParticipants() as $participant ) {
             $message = new TemplatedEmail();
@@ -75,7 +66,6 @@ class Mailer
 
     public function annulationParticipation(Sortie $sortie, Participant $participant):void{
         //Envoie une notification de désistement du participant à l'organisateur
-        //todo créer fonction
         $message = new TemplatedEmail();
         $message->from(self::ENVOYEUR)
             ->to($sortie->getOrganisateur()->getEmail())

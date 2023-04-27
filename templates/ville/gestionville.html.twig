@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+{% block title %}Gestion Ville{% endblock %}
+{% block stylesheets %}{% endblock %}
+{% block javascripts %}{% endblock %}
+{% block body %}
+
+    <h1>Gérer les villes</h1>
+<body>
+<h2>Filtrer les villes</h2>
+<div>
+    <form name="nom">
+        <label for="nom">Le nom contient</label>
+        <input type="text" id="nom" name="nom">
+        <button type="submit" name="nom">Rechercher</button>
+    </form>
+</div>
+<table>
+    <thead>
+        <tr>
+            <th>Ville</th>
+            <th>Code Postal</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    {% for ville in villes %}
+        <tr>
+            <td>{{ ville.nom }}</td>
+            <td>{{ ville.codePostal }}</td>
+            <td>
+                <a>Modifier</a>
+                <a>Supprimer</a>
+            </td>
+        </tr>
+    {% endfor %}
+        {{ form_start(form) }}
+        <tr>
+            <td>{{ form_row(form.nom) }}</td>
+            <td>{{ form_row((form.codePostal)) }}</td>
+            <td><button type="submit">Ajouter</button></td>
+        </tr>
+        {{ form_end(form) }}
+</table>
+
+</body>
+{% endblock %}
