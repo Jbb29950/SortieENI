@@ -49,6 +49,16 @@ class SortieController extends AbstractController
 
     public function afficherSortie(Sortie $sortie): Response
     {
+        //Sorties cloturées depuis 1 mois pas consultables
+
+        $dateUnMoisAvant = new \DateTime();
+        $dateUnMoisAvant->modify('-1 month');
+
+        if ($sortie->getDateHeureDebut() < $dateUnMoisAvant) {
+            $this->addFlash('warning', 'Cette sortie est trop ancienne et ne peut plus être consultée.');
+            return $this->redirectToRoute('app_home');
+        }
+
         return $this->render('sortie/afficherSortie.html.twig', [
             'sortie' => $sortie,
         ]);
@@ -101,6 +111,5 @@ class SortieController extends AbstractController
             'sortie' => $sortie,
         ]);
     }
-
 }
 
