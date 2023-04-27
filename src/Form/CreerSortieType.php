@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Etat;
 use App\Entity\Lieu;
 use App\Entity\Sortie;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -24,7 +25,10 @@ class CreerSortieType extends AbstractType
                 'class'=>Lieu::class,
                 'choice_label' => 'nom',
             ])
-            ->add('etat')
+            ->add('etat', EntityType::class,[
+                'class'=>Etat::class,
+                'choice_label'=>'libelle'
+            ])
         ;
     }
 
