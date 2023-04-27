@@ -1,0 +1,22 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.table{
+    max-width: 35%;
+}
+table{
+    display: block;
+    line-height: 10px;
+    columns: fit-content;
+}
+.col_2{
+    width: 5px;
+}
+.btn-link{
+
+    color: black;
+}
+h1{
+    text-align: center;
+}
