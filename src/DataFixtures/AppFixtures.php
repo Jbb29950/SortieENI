@@ -13,7 +13,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class AppFixtures extends Fixture
 {
-    public function load(ObjectManager $manager, ): void
+    public function load(ObjectManager $manager,): void
     {
         //Création des états
         $enCreation = new Etat();
@@ -136,11 +136,11 @@ class AppFixtures extends Fixture
         //Creation de deux sorties
 
         $datet = new \DateTime();
-        $datet->setDate(2023,6,15);
-        $datet->setTime(2,30);
+        $datet->setDate(2023, 6, 15);
+        $datet->setTime(2, 30);
 
         $duree = new \DateTime();
-        $duree->setTime(2,30);
+        $duree->setTime(2, 30);
 
         $balade = new Sortie();
         $balade->setNom("Balade au parc");
@@ -149,15 +149,15 @@ class AppFixtures extends Fixture
         $balade->setDateHeureDebut($datet);
         $balade->setLieu($parccher);
         $balade->setEtat($enCreation);
-        $datet ->setDate(2023,5,15);
+        $datet->setDate(2023, 5, 15);
         $balade->setDateLimiteInscription($datet);
         $balade->setNbInscriptionsMax(10);
         $balade->setInfosSortie('Il va faire chaud préparez de l\'eau');
         $manager->persist($balade);
 
         $datet = new \DateTime();
-        $datet->setDate(2023,7,15);
-        $datet->setTime(2,30);
+        $datet->setDate(2023, 7, 15);
+        $datet->setTime(2, 30);
         $picole = new Sortie();
         $picole->setNom("Balade au bar");
         $picole->setOrganisateur($pomme);
@@ -165,7 +165,7 @@ class AppFixtures extends Fixture
         $picole->setDateHeureDebut($datet);
         $picole->setLieu($barherb);
         $picole->setEtat($ouvert);
-        $datet ->setDate(2023,6,15);
+        $datet->setDate(2023, 6, 15);
         $picole->setDateLimiteInscription($datet);
         $picole->setNbInscriptionsMax(200);
         $picole->setInfosSortie('Il va faire chaud mais il n\'y aura pas d\'eau');
@@ -174,4 +174,6 @@ class AppFixtures extends Fixture
 
         $manager->flush();
     }
+}
+
 
