@@ -45,10 +45,12 @@ class AppFixtures extends Fixture
         $stherb = new Ville();
         $stherb->setNom('SAINT HERBLAIN');
         $stherb->setCodePostal(44800);
+        $manager->persist($stherb);
 
         $cherbourg = new Ville();
         $cherbourg->setNom('CHERBOURG');
         $cherbourg->setCodePostal(50100);
+        $manager->persist($cherbourg);
 
         //création de deux villes
         $barherb = new Lieu();
