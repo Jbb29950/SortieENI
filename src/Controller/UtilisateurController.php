@@ -26,12 +26,23 @@ class UtilisateurController extends AbstractController
     }
 
     #[Route('/utilisateur/modifier', name: 'modifier_profil')]
-    public function modifierProfil(Request $request, EntityManagerInterface $entityManager): Response
+    public function modifierProfil(Request $request, EntityManagerInterface $entityManager, ParticipantRepository $participantRepository): Response
     {   $user=$this->getUser();
         $modifierProfilForm = $this -> createForm(UpdateProfileType::class,$user);
         $modifierProfilForm -> handleRequest($request);
         dump($user);
         if ($modifierProfilForm -> isSubmitted() && $modifierProfilForm -> isValid()) {
+            $pseudo = $user->getPseudo();
+            if($pseudo){
+                if($participantRepository->findOneBy(['pseudo'=>$pseudo])){
+                    $this -> addFlash('fail', 'Pseudo déjà utilisé');
+                    return $this -> render('utilisateur/modificationProfil.html.twig', [
+
+                        'modifierProfil' => $modifierProfilForm -> createView(),
+                    ]);
+                }
+            }
+
 
             $entityManager->persist($user);
             $entityManager -> flush();
