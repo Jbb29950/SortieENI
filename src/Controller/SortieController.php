@@ -19,7 +19,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class SortieController extends AbstractController
 {
     #[Route('/sortie/creer', name: 'creer_Sortie')]
-
     public function creerSortie(Request $request, EntityManagerInterface $entityManager, ParticipantRepository $participantRepository): Response
     {
         $sortie = new Sortie();
@@ -46,7 +45,6 @@ class SortieController extends AbstractController
     }
 
     #[Route ('/sortie/{id}', name: 'afficher_Sortie')]
-
     public function afficherSortie(Sortie $sortie): Response
     {
         return $this->render('sortie/afficherSortie.html.twig', [
@@ -56,7 +54,6 @@ class SortieController extends AbstractController
 
 
     #[Route('/sortie/modifier/{id}', name: 'modifier_Sortie')]
-
     public function modifierSortie(Request $request, Sortie $sortie, EntityManagerInterface $entityManager): Response
     {
         $modifierSortieForm = $this->createForm(ModifierSortieType::class, $sortie);
@@ -75,8 +72,8 @@ class SortieController extends AbstractController
             'modifierSortieForm' => $modifierSortieForm->createView(),
         ]);
     }
-    #[Route('/sortie/annuler/{id}', name: 'annuler_Sortie')]
 
+    #[Route('/sortie/annuler/{id}', name: 'annuler_Sortie')]
     public function annulerSortie(Request $request, EntityManagerInterface $entityManager, SortieRepository $sortieRepository, int $id): Response
     {
         $sortie = $sortieRepository->find($id);
@@ -100,6 +97,23 @@ class SortieController extends AbstractController
             'form' => $annulerSortieForm->createView(),
             'sortie' => $sortie,
         ]);
+    }
+
+
+    public function test(EntityManagerInterface $entityManager)
+    {
+        $sortiee = new sortie();
+        $sortiee->setNom('england');
+        $sortiee->setDateHeureDebut(new \DateTime());
+        $sortiee->setDuree(30);
+        $sortiee->setdatelimiteinscription(new\Datetime("+1"));
+        $sortiee->setnbinscription(5);
+        $sortiee->setinfosSortie();
+        return $this->render('sortie/creerSortie.html.twig',[
+        'sortiee' => $sortiee,]);
+
+$entityManager->persist($sortiee);
+$entityManager->flush();
     }
 
 }
