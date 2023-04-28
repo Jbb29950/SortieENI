@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+{% block title %}Gestion Ville{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ asset('css/lieu.css') }}"
+{% endblock %}
+{% block javascripts %}{% endblock %}
+{% block body %}
+
+    <h1>Gérer les villes</h1>
+<body>
+<h2>Filtrer les villes</h2>
+<div>
+    <form name="nom">
+        <label for="nom">Le nom contient : </label>
+        <input type="text" id="nom" name="nom">
+        <button type="submit" name="nom">Rechercher</button>
+    </form>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Ville</th>
+            <th scope="col" class="col_2">Code Postal</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for ville in villes %}
+        <tr>
+            <td>{{ ville.nom }}</td>
+            <td class="col_2">{{ ville.codePostal }}</td>
+            <td>
+                <!--<button class="btn btn-link">Modifier</button>-->
+                <a class="btn btn-link" href="{{ path('app_lieu_supprimer_ville', {'id': ville.id})}}">Supprimer</a>
+            </td>
+        </tr>
+    {% endfor %}
+        {{ form_start(form) }}
+        <tr>
+            <td>{{ form_row(form.nom) }}</td>
+            <td class="col_2">{{ form_row((form.codePostal)) }}</td>
+            <td><button type="submit" class="btn btn-link">Ajouter</button></td>
+        </tr>
+        {{ form_end(form) }}
+    </tbody>
+</table>
+
+</body>
+{% endblock %}

@@ -1,6 +1,6 @@
-<img class="logo" src="{{ asset('img/logo-social.png') }}" alt="Logo du site" height="120" width="120">
+<img class="logo" src="{{ asset('img/logo.jpg') }}" alt="Logo du site" height="120" width="120">
 <ul class="nav">
-    <li class="nav-link"><a href="#" title="Villes">Villes</a></li>
+    <li class="nav-link"><a href="{{ path('app_lieu_modifier_Ville') }}" title="Villes">Villes</a></li>
     <li class="nav-link"><a href="{{ path('app_campus') }}" title="Campus">Campus</a></li>
     <li class="nav-link"><a href="{{ path('app_home') }}" title="Accueil">Acceuil</a></li>
     {% if app.user %}

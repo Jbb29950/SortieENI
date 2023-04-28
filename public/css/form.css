@@ -1,51 +1,50 @@
-.formulaire_inscription{
-  background-color: #5eb5e0;
-
+.formulaire_inscription {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
 }
-label{
+
+
+.formulaire_inscription label {
     display: block;
-    text-align: center;
-    margin-top: 30px;
-    font-size: 35px;
+    font-weight: bold;
+    margin-bottom: 5px;
 }
-input{
-    width:30%;
-    margin-left: 35%;
-    font-size: 40px;
-    height: 40px;
-    padding-top: 15px;
-    padding-bottom:15px;
-    padding-left: 5px;
-    border-radius: 20px;
-}
-.titre_formulaire{
-    text-align: center;
-    color: #B0413E;
-    text-decoration: underline;
-    font-size: 40px;
-}
-button{
-    display: inline-block;
-    min-width: 30%;
-    height: 10%;
-    max-width: 250px;
-    margin-left:36%;
-    margin-top: 20px;
+
+.formulaire_inscription input[type="text"],
+.formulaire_inscription input[type="email"],
+.formulaire_inscription input[type="password"] {
+    width: 100%;
+    padding: 10px;
     margin-bottom: 20px;
-    font-size: 300%;
-    border-radius: 25px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 16px;
+}
+
+
+ button {
+    min-width: 30%;
+    max-width: 250px;
+    margin-left: 35%;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    font-size: 200%;
+    border-radius: 5px;
     overflow: hidden;
-
+    background-color: #B0413E;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
 }
 
-.bouton_valider{
-    text-justify: auto;
-
-    align-items: center;
-
-}
-button:hover{
-    color: red;
+ button:hover {
+    color: #ff0000;
 }
 
 .container_profil h1 {
@@ -59,4 +58,13 @@ button:hover{
 }
 .profil h2{
     text-align: center;
+}
+#campus{
+
+    height: 50px;
+    min-width: 30%;
+    margin-left: 35%;
+    margin-top: 30px;
+    text-align: center;
+
 }

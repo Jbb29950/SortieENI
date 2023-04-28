@@ -47,6 +47,16 @@ class SortieController extends AbstractController
     #[Route ('/sortie/{id}', name: 'afficher_Sortie')]
     public function afficherSortie(Sortie $sortie): Response
     {
+        //Sorties cloturées depuis 1 mois pas consultables
+
+        $dateUnMoisAvant = new \DateTime();
+        $dateUnMoisAvant->modify('-1 month');
+
+        if ($sortie->getDateHeureDebut() < $dateUnMoisAvant) {
+            $this->addFlash('warning', 'Cette sortie est trop ancienne et ne peut plus être consultée.');
+            return $this->redirectToRoute('app_home');
+        }
+
         return $this->render('sortie/afficherSortie.html.twig', [
             'sortie' => $sortie,
         ]);
@@ -98,23 +108,7 @@ class SortieController extends AbstractController
             'sortie' => $sortie,
         ]);
     }
-
-
-    public function test(EntityManagerInterface $entityManager)
-    {
-        $sortiee = new sortie();
-        $sortiee->setNom('england');
-        $sortiee->setDateHeureDebut(new \DateTime());
-        $sortiee->setDuree(30);
-        $sortiee->setdatelimiteinscription(new\Datetime("+1"));
-        $sortiee->setnbinscription(5);
-        $sortiee->setinfosSortie();
-        return $this->render('sortie/creerSortie.html.twig',[
-        'sortiee' => $sortiee,]);
-
-$entityManager->persist($sortiee);
-$entityManager->flush();
-    }
-
 }
+
+
 
