@@ -107,8 +107,9 @@ class SortieController extends AbstractController
             'form' => $annulerSortieForm->createView(),
             'sortie' => $sortie,
         ]);
+
+
     }
 }
-
 
 
