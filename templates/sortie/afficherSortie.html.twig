@@ -23,5 +23,14 @@
                 <li>{{ participant.nom }} {{ participant.prenom }}</li>
             {% endfor %}
         </ul>
+
+        {% if app.user and sortie.dateLimiteInscription > 'now' %}
+            {% if app.user in sortie.participants %}
+                <a href="{{ path('sortie_desister', {'id': sortie.id}) }}" class="btn btn-danger">Se désister</a>
+            {% else %}
+                <a href="{{ path('inscription_sortie', {'id': sortie.id}) }}" class="btn btn-success">S'inscrire</a>
+            {% endif %}
+        {% endif %}
+
     </div>
 {% endblock %}
