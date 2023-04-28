@@ -60,6 +60,9 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $pseudo = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $photo_profil = null;
+
     public function __construct()
     {
         $this->sortie = new ArrayCollection();
@@ -270,6 +273,18 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPseudo(?string $pseudo): self
     {
         $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+    public function getPhotoProfil(): ?string
+    {
+        return $this->photo_profil;
+    }
+
+    public function setPhotoProfil(?string $photo_profil): self
+    {
+        $this->photo_profil = $photo_profil;
 
         return $this;
     }
