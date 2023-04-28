@@ -9,7 +9,10 @@
     {{ form_row(campusType.nom) }}
     <button type="submit" class="btn">Ajouter</button>
     {{ form_end(campusType) }}
+    {% block stylesheets %}
 
+        <link rel="stylesheet" href="{{ asset('css/campus.css') }}"
+    {% endblock %}
 
 </div>
 

@@ -1,0 +1,58 @@
+form {
+    margin: 20px auto;
+    max-width: 600px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border-color: #3366ff;
+}
+
+button[type="submit"] {
+    background-color: #3366ff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #1a53ff;
+}
+/* Styliser le titre h1 */
+h1 {
+    font-size: 48px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px #ddd;
+}
+
+/* Modifier le style du texte lorsqu'il est survolé */
+h1:hover {
+    color: #00ff22;
+    text-shadow: none;
+}
+
+/* Ajouter un arrière-plan en dégradé */
+body {
+    background: linear-gradient(#eee, #fff);
+}
