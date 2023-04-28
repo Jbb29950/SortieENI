@@ -8,7 +8,7 @@ use App\Form\AnnulerSortieType;
 use App\Form\CreerSortieType;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
-use Controller\ModifierSortieType;
+use App\Controller\ModifierSortieType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -64,9 +64,15 @@ class SortieController extends AbstractController
 
 
     #[Route('/sortie/modifier/{id}', name: 'modifier_Sortie')]
-    public function modifierSortie(Request $request, Sortie $sortie, EntityManagerInterface $entityManager): Response
+    public function modifierSortie(Request $request, Sortie $sortie = null, EntityManagerInterface $entityManager): Response
     {
-        $modifierSortieForm = $this->createForm(ModifierSortieType::class, $sortie);
+        // Vérifier si la variable $sortie est null
+        if (!$sortie) {
+            // Si $sortie est null, rediriger vers une page d'erreur 404
+            throw $this->createNotFoundException('La sortie demandée n\'existe pas');
+        }
+
+        $modifierSortieForm = $this->createForm(\App\Controller\ModifierSortieType::class, $sortie);
         $modifierSortieForm->handleRequest($request);
 
         if ($modifierSortieForm->isSubmitted() && $modifierSortieForm->isValid()) {
@@ -82,6 +88,7 @@ class SortieController extends AbstractController
             'modifierSortieForm' => $modifierSortieForm->createView(),
         ]);
     }
+
 
     #[Route('/sortie/annuler/{id}', name: 'annuler_Sortie')]
     public function annulerSortie(Request $request, EntityManagerInterface $entityManager, SortieRepository $sortieRepository, int $id): Response
