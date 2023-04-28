@@ -95,6 +95,20 @@ class SortieController extends AbstractController
     {
         $sortie = $sortieRepository->find($id);
 
+        // Vérifier que l'utilisateur connecté est l'organisateur de la sortie
+        $user = $this->getUser();
+        if (!$sortie->getOrganisateur()->getId() == $user->getId()) {
+            $this->addFlash('error', 'Vous n\'êtes pas autorisé à annuler cette sortie.');
+            return $this->redirectToRoute('afficher_Sortie', ['id' => $sortie->getId()]);
+        }
+
+        // Vérifier que la sortie n'a pas encore commencé
+        $now = new \DateTime();
+        if ($sortie->getDateHeureDebut() <= $now) {
+            $this->addFlash('error', 'La sortie a déjà commencé, vous ne pouvez plus l\'annuler.');
+            return $this->redirectToRoute('afficher_Sortie', ['id' => $sortie->getId()]);
+        }
+
         $annulerSortieForm = $this->createForm(AnnulerSortieType::class);
 
         $annulerSortieForm->handleRequest($request);
@@ -102,12 +116,13 @@ class SortieController extends AbstractController
         if ($annulerSortieForm->isSubmitted() && $annulerSortieForm->isValid()) {
             $motif = $annulerSortieForm->get('motif')->getData();
 
-            $sortie->setEtat('Annulée');
+            $sortie->setMotifAnnulation($motif);
+            $sortie->setEtat('annulé');
             $entityManager->flush();
 
             $this->addFlash('success', 'La sortie a été annulée avec succès.');
 
-            return $this->redirectToRoute('app_home', ['id' => $sortie->getId()]);
+            return $this->redirectToRoute('afficher_Sortie', ['id' => $sortie->getId()]);
         }
 
         return $this->render('sortie/annulerSortie.html.twig', [
@@ -115,6 +130,7 @@ class SortieController extends AbstractController
             'sortie' => $sortie,
         ]);
     }
+
 
     public function test(EntityManagerInterface $entityManager)
     {
