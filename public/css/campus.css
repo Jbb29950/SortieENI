@@ -36,7 +36,7 @@ button[type="submit"] {
 button[type="submit"]:hover {
     background-color: #1a53ff;
 }
-/* Styliser le titre h1 */
+
 h1 {
     font-size: 48px;
     font-weight: bold;
@@ -46,13 +46,11 @@ h1 {
     text-shadow: 2px 2px #ddd;
 }
 
-/* Modifier le style du texte lorsqu'il est survolé */
+
 h1:hover {
     color: #00ff22;
     text-shadow: none;
 }
-
-/* Ajouter un arrière-plan en dégradé */
 body {
     background: linear-gradient(#eee, #fff);
 }
