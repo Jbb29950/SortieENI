@@ -4,7 +4,7 @@
     margin: 20px auto;
     padding: 20px;
     background-color: #fff;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 10px rgb(134, 188, 107);
     border-radius: 10px;
     text-align: center;
 }
@@ -13,20 +13,21 @@
     font-size: 36px;
     font-weight: inherit;
     font-family: "Helvetica Neue", Arial, sans-serif;
-    color: #0059ff;
+    color: #d2e0d5;
     text-shadow: 2px 2px 4px rgba(33, 31, 31, 0.5);
     letter-spacing: 1px;
     line-height: 1.5;
     border-bottom: 2px solid #ccc;
-    background-color: #f0f0f0;
+    background-color: #28a745;
     text-align: center;
     margin:  auto;
     padding: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 10px rgb(134, 188, 107);
     border-radius: 10px;
 
+
 }
-/* Profil */
+
 .profil {
     margin: 20px;
     padding: 20px;
@@ -35,16 +36,26 @@
     box-shadow: 0px 0px 10px rgb(163, 194, 210);
 }
 
-/* Profil - nom, prénom, téléphone, email, campus */
+
 .profil h2 {
     font-size: 1.2rem;
     margin-bottom: 1rem;
     text-align: left;
 }
-
-/* Profil - pseudo */
-.profil h2:last-child {
-    margin-bottom: 0;
+.btn-success {
+    background-color: #0c3e6e; /* couleur de fond */
+    color: #fff; /* couleur de texte */
+    border-radius: 5px; /* coins arrondis */
+    padding: 10px 20px; /* rembourrage du bouton */
+    text-decoration: underline; /* pas de soulignement */
 }
+
+.btn-success:hover {
+    background-color: #0059ff; /* couleur de fond au survol */
+    color: #fff; /* couleur de texte au survol */
+    text-decoration: underline; /* pas de soulignement au survol */
+}
+
+
 
 
