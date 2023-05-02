@@ -18,7 +18,7 @@ class InscriptionController extends AbstractController
     public function inscriptionSortie(Request $request, Sortie $sortie, EntityManagerInterface $entityManager): Response
     {
         // Vérifier que la sortie est ouverte et que la date limite d'inscription n'est pas dépassée
-        if ($sortie->getEtat() != "ouvert" || $sortie->getDateLimiteInscription() < new \DateTime()) {
+        if ($sortie->getEtat()->getId() != '2' || $sortie->getDateLimiteInscription() < new \DateTime()) {
             $this->addFlash('error', 'La date limite d\'inscription est dépassée ou la sortie est fermée.');
             return $this->redirectToRoute('afficher_Sortie', ['id' => $sortie->getId()]);
         }
