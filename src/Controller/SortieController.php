@@ -8,7 +8,7 @@ use App\Form\AnnulerSortieType;
 use App\Form\CreerSortieType;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
-use App\Controller\ModifierSortieType;
+use App\Form\ModifierSortieType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -72,7 +72,7 @@ class SortieController extends AbstractController
             throw $this->createNotFoundException('La sortie demandée n\'existe pas');
         }
 
-        $modifierSortieForm = $this->createForm(\App\Controller\ModifierSortieType::class, $sortie);
+        $modifierSortieForm = $this->createForm(\App\Form\ModifierSortieType::class, $sortie);
         $modifierSortieForm->handleRequest($request);
 
         if ($modifierSortieForm->isSubmitted() && $modifierSortieForm->isValid()) {
