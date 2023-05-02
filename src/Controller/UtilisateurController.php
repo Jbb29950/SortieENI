@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class UtilisateurController extends AbstractController
@@ -28,15 +29,17 @@ class UtilisateurController extends AbstractController
     }
 
     #[Route('/utilisateur/modifier', name: 'modifier_profil')]
-    public function modifierProfil(Request $request, EntityManagerInterface $entityManager, ParticipantRepository $participantRepository): Response
+    public function modifierProfil(Request $request, EntityManagerInterface $entityManager, ParticipantRepository $participantRepository, PasswordHasherInterface $passwordHasher): Response
     {
         $user = $this -> getUser();
         $modifierProfilForm = $this -> createForm(UpdateProfileType::class, $user);
         $modifierProfilForm -> handleRequest($request);
-        dump($user);
+
         if ($modifierProfilForm -> isSubmitted() && $modifierProfilForm -> isValid()) {
             $pseudo = $user -> getPseudo();
-
+            $mdp = $passwordHasher->hash($modifierProfilForm->get('password')->getData());
+            assert($user instanceof Participant);
+            $user->setPassword($mdp);
 
             $photoFile = $modifierProfilForm -> get('photo_profil') -> getData();
             $ficherPhoto = md5(uniqid()) . '.' . $photoFile -> guessExtension();
@@ -55,7 +58,6 @@ class UtilisateurController extends AbstractController
                 }
 
             }
-            dd($user);
             $entityManager -> persist($user);
             $entityManager -> flush();
 
