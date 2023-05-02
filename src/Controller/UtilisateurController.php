@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class UtilisateurController extends AbstractController
 {
@@ -28,7 +29,9 @@ class UtilisateurController extends AbstractController
     }
 
     #[Route('/utilisateur/modifier', name: 'modifier_profil')]
-    public function modifierProfil(Request $request, EntityManagerInterface $entityManager, ParticipantRepository $participantRepository): Response
+    public function modifierProfil(Request $request, EntityManagerInterface $entityManager,
+                                   SluggerInterface $slugger,
+                                   ParticipantRepository $participantRepository): Response
     {
         $user = $this -> getUser();
         $modifierProfilForm = $this -> createForm(UpdateProfileType::class, $user);
@@ -36,13 +39,13 @@ class UtilisateurController extends AbstractController
         dump($user);
         if ($modifierProfilForm -> isSubmitted() && $modifierProfilForm -> isValid()) {
             $pseudo = $user -> getPseudo();
-            $photoFile = $modifierProfilForm ['photo_profil'] -> getData();
+            $photoFile = $modifierProfilForm ->get('photo_profil') -> getData();
 
             if($photoFile) {
 
                 $originalFileName = pathinfo($photoFile->getClientOriginalName(),PATHINFO_FILENAME);
-                $safeFileName=transliterator_transliterate('Any-Latin;Latin-ASCII;[^A-Za-z0-9_] remove;Lower()',$photoFile);
-                $newFileName=$originalFileName.'-'.uniqid().'-'.$photoFile->guessExtension();
+                $safeFileName= $slugger->slug($originalFileName);
+                $newFileName=$safeFileName.'-'.uniqid().'-'.$photoFile->guessExtension();
                 try {
                     $photoFile -> move(
                         $this -> getParameter('photo_dir'),
@@ -52,7 +55,7 @@ class UtilisateurController extends AbstractController
                 }
                 catch (FileException $e){
 
-                }
+                }$user->setPhotoProfil($newFileName);
             }
 
             if ($pseudo) {
@@ -66,7 +69,7 @@ class UtilisateurController extends AbstractController
 
             }
 
-            $user->setPhotoProfil($newFileName);
+
 
             $entityManager -> persist($user);
             $entityManager -> flush();
