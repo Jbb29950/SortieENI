@@ -26,7 +26,7 @@ class UpdateProfileType extends AbstractType
                 'mapped'=>false,
                 'required'=>false,
                 'constraints'=>[
-                    new File(['maxSize'=>'2048k'
+                    new File(['maxSize'=>'1024k'
                     ])
                 ]
         ]       )

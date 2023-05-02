@@ -45,6 +45,7 @@ class UtilisateurController extends AbstractController
                 $ficherPhoto
             );
 
+
             if ($pseudo) {
                 if ($participantRepository -> findOneBy(['pseudo' => $pseudo])) {
                     $this -> addFlash('fail', 'Pseudo déjà utilisé');
