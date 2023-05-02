@@ -85,7 +85,7 @@ class InscriptionController extends AbstractController
 
         $this->addFlash('success', 'Votre désistement a été enregistré.');
 
-        return $this->redirectToRoute('afficher_Sortie', ['id' => $sortie->getId()]);
+        return $this->redirectToRoute('app_home', ['id' => $sortie->getId()]);
     }
 
 
