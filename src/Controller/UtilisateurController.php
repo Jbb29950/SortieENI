@@ -33,9 +33,8 @@ class UtilisateurController extends AbstractController
 
     public function modifierProfil(Request $request, EntityManagerInterface $entityManager,
                                    SluggerInterface $slugger,
-                                   ParticipantRepository $participantRepository
-                                   PasswordHasherInterface $passwordHasher): Response
-    {
+                                   ParticipantRepository $participantRepository,
+                                   PasswordHasherInterface $passwordHasher): Response{
         $user = $this -> getUser();
         $modifierProfilForm = $this -> createForm(UpdateProfileType::class, $user);
         $modifierProfilForm -> handleRequest($request);
