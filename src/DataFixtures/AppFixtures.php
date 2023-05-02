@@ -11,20 +11,20 @@ use App\Entity\Ville;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactory;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
 
 class AppFixtures extends Fixture
 {
 
     public function load(ObjectManager $manager): void
     {
+
         //Chargement du PasswordHasher
         $factory = new PasswordHasherFactory([
             'auto'=>['algorithm'=>'auto']
         ]);
         $hasher = $factory->getPasswordHasher('auto');
-
+        
         //ALTER TABLE tablename AUTO_INCREMENT = 1
         $conn = $manager->getConnection();
 
@@ -135,6 +135,7 @@ class AppFixtures extends Fixture
         $pomme->setEmail('pomme@pistache.fr');
         $pomme->setPseudo('PommePistache');
         $pomme->setAdministrateur(true);
+        $pomme->setRoles(['ROLE_ADMIN']);
         $manager->persist($pomme);
 
         $choco = new Participant();
@@ -147,6 +148,7 @@ class AppFixtures extends Fixture
         $choco->setEmail('chocolat@banane.fr');
         $choco->setPseudo('ChocolatBanane');
         $choco->setAdministrateur(false);
+        $choco->setRoles(['ROLE_USER']);
         $manager->persist($choco);
 
         $citron = new Participant();
@@ -159,6 +161,7 @@ class AppFixtures extends Fixture
         $citron->setEmail('citron@cassis.fr');
         $citron->setPseudo('CitronCassis');
         $citron->setAdministrateur(false);
+        $citron->setRoles(['ROLE_USER']);
         $manager->persist($citron);
 
         $fraise = new Participant();
@@ -171,6 +174,7 @@ class AppFixtures extends Fixture
         $fraise->setEmail('fraise@vanille.fr');
         $fraise->setPseudo('FraiseVanille');
         $fraise->setAdministrateur(false);
+        $fraise->setRoles(['ROLE_USER']);
         $manager->persist($fraise);
         //Creation de deux sorties
 
