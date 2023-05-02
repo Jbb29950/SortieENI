@@ -6,11 +6,14 @@ use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Form\AnnulerSortieType;
 use App\Form\CreerSortieType;
+use App\Repository\EtatRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
 use App\Form\ModifierSortieType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -90,62 +93,70 @@ class SortieController extends AbstractController
     }
 
 
-    #[Route('/sortie/annuler/{id}', name: 'annuler_Sortie')]
-    public function annulerSortie(Request $request, EntityManagerInterface $entityManager, SortieRepository $sortieRepository, int $id): Response
+    #[Route('/sortie/supprimer/{id}', name: 'supprimer_Sortie')]
+    public function supprimerSortie(Request $request, EntityManagerInterface $entityManager, SortieRepository $sortieRepository, int $id, EtatRepository $etatRepository): Response
     {
         $sortie = $sortieRepository->find($id);
 
+        if (is_null($sortie));
+        {
+            $this->redirectToRoute('app_home');
+        }
+
         // Vérifier que l'utilisateur connecté est l'organisateur de la sortie
         $user = $this->getUser();
-        if (!$sortie->getOrganisateur()->getId() == $user->getId()) {
-            $this->addFlash('error', 'Vous n\'êtes pas autorisé à annuler cette sortie.');
+        if (!$this->isGranted('ROLE_ADMIN') && !$sortie->getOrganisateur()->getId() == $user->getId())  {
+            $this->addFlash('error', 'Vous n\'êtes pas autorisé à supprimer cette sortie.');
             return $this->redirectToRoute('afficher_Sortie', ['id' => $sortie->getId()]);
         }
 
         // Vérifier que la sortie n'a pas encore commencé
         $now = new \DateTime();
         if ($sortie->getDateHeureDebut() <= $now) {
-            $this->addFlash('error', 'La sortie a déjà commencé, vous ne pouvez plus l\'annuler.');
+            $this->addFlash('error', 'La sortie a déjà commencé, vous ne pouvez plus la supprimer.');
             return $this->redirectToRoute('afficher_Sortie', ['id' => $sortie->getId()]);
         }
 
-        $annulerSortieForm = $this->createForm(AnnulerSortieType::class);
+        // Créer un formulaire pour confirmer la suppression avec un champ "motif"
+        $form = $this->createFormBuilder()
+            ->add('motif', TextareaType::class, [
+                'label' => 'Motif de la suppression',
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'Veuillez saisir un motif pour la suppression de la sortie',
+                ],
+            ])
+            ->add('supprimer', SubmitType::class, [
+                'label' => 'Supprimer',
+                'attr' => [
+                    'class' => 'btn btn-danger',
+                    'onclick' => "return confirm('Êtes-vous sûr de vouloir supprimer cette sortie?')",
+                ],
+            ])
+            ->getForm();
 
-        $annulerSortieForm->handleRequest($request);
+        $form->handleRequest($request);
 
-        if ($annulerSortieForm->isSubmitted() && $annulerSortieForm->isValid()) {
-            $motif = $annulerSortieForm->get('motif')->getData();
+        if ($form->isSubmitted() && $form->isValid()) {
 
-            $sortie->setMotifAnnulation($motif);
-            $sortie->setEtat('annulé');
+            //MàJ du statut de la sortie
+            $sortie->setEtat($etatRepository->findOneBy(['libelle'=>'Annulé']));
+            $entityManager->persist($sortie);
             $entityManager->flush();
 
-            $this->addFlash('success', 'La sortie a été annulée avec succès.');
+            $this->addFlash('success', 'La sortie a été supprimée avec succès.');
 
-            return $this->redirectToRoute('afficher_Sortie', ['id' => $sortie->getId()]);
+            return $this->redirectToRoute('app_home');
         }
 
         return $this->render('sortie/annulerSortie.html.twig', [
-            'form' => $annulerSortieForm->createView(),
+            'form' => $form->createView(),
             'sortie' => $sortie,
         ]);
     }
-    public function test(EntityManagerInterface $entityManager)
-    {
-        $sortiee = new sortie();
-        $sortiee->setNom('england');
-        $sortiee->setDateHeureDebut(new \DateTime());
-        $sortiee->setDuree(30);
-        $sortiee->setdatelimiteinscription(new\Datetime("+1"));
-        $sortiee->setnbinscription(5);
-        $sortiee->setinfosSortie();
-        return $this->render('sortie/creerSortie.html.twig',[
-        'sortiee' => $sortiee,]);
 
-$entityManager->persist($sortiee);
-$entityManager->flush();
-    }
-    
+
+
 }
 
 
