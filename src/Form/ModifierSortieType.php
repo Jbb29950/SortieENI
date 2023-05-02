@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Form;
 
 use App\Entity\Etat;
 use App\Entity\Sortie;
@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -40,6 +41,13 @@ class ModifierSortieType extends AbstractType
                 'label' => 'Etat',
                 'class'=>Etat::class,
                 'choice_label'=>'libelle'
+            ])
+            ->add('motifAnnulation', TextareaType::class, [
+                'label' => 'Motif d\'annulation',
+                'required' => false,
+                'attr' => [
+                    'placeholder' => 'Saisir un motif d\'annulation'
+                ]
             ]);
     }
 
