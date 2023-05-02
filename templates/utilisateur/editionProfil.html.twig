@@ -8,6 +8,7 @@
         <h1 class="titre_profil">Votre profil</h1>
                {% if app.user %}
                    <div class="profil">
+                       <h2>Votre photo de profil : <img src=" {{ app.user.photoProfil }}"/></h2>
                    <h2>Votre nom : {{ app.user.nom }}</h2>
                    <h2>Votre prénom : {{ app.user.prenom}}</h2>
                    <h2>Votre telephone : {{ app.user.telephone }}</h2>

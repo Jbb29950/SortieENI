@@ -58,7 +58,10 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $organisateur;
 
     #[ORM\Column(length: 50, nullable: true)]
-    private ?string $Pseudo = null;
+    private ?string $pseudo = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $photo_profil = null;
 
     public function __construct()
     {
@@ -264,12 +267,24 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getPseudo(): ?string
     {
-        return $this->Pseudo;
+        return $this->pseudo;
     }
 
-    public function setPseudo(?string $Pseudo): self
+    public function setPseudo(?string $pseudo): self
     {
-        $this->Pseudo = $Pseudo;
+        $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+    public function getPhotoProfil(): ?string
+    {
+        return $this->photo_profil;
+    }
+
+    public function setPhotoProfil(?string $photo_profil): self
+    {
+        $this->photo_profil = $photo_profil;
 
         return $this;
     }

@@ -6,29 +6,31 @@
     <div class="container">
         <h1>{{ sortie.nom }}</h1>
 
-            <div>
-                <p>Date et heure: {{ sortie.dateHeureDebut|date('d/m/Y H:i') }}</p>
-                <p>Date limite d'inscription: {{ sortie.dateLimiteInscription|date('d/m/Y') }}</p>
-                <p>Nombre de places: {{ sortie.nbInscriptionsMax }}</p>
-                <p>Durée: {{ sortie.duree }} minutes</p>
-                <p>Description: {{ sortie.infosSortie }}</p>
-                <p>Informations: {{ sortie.infos }}</p>
-                <p>Campus: {{ sortie.lieu.campus.nom }}</p>
-                <p>Lieu: {{ sortie.lieu.nom }}</p>
-                <p>Adresse: {{ sortie.lieu.adresse }}</p>
-                <p>Code postal: {{ sortie.lieu.codePostal }}</p>
-                <p>Latitude: {{ sortie.lieu.latitude }}</p>
-                <p>Longitude: {{ sortie.lieu.longitude }}</p>
-            </div>
-
-                <h2>Participants ({{ sortie.participants|length }})</h2>
-                <ul>
-                    {% for participant in sortie.participants %}
-                        <li>{{ participant.nom }} {{ participant.prenom }}</li>
-                    {% endfor %}
-                </ul>
+        <div>
+            <p>Date et heure : {{ sortie.dateHeureDebut|date('d/m/Y H:i') }}</p>
+            <p>Date limite d'inscription: {{ sortie.dateLimiteInscription|date('d/m/Y') }}</p>
+            <p>Nombre de places: {{ sortie.nbInscriptionsMax }}</p>
+            <p>Durée: {{ sortie.duree|date('H:i:s') }} minutes</p>
+            <p>Description: {{ sortie.infosSortie }}</p>
+            <p>Lieu: {{ sortie.lieu.nom }}</p>
+            <p>Latitude: {{ sortie.lieu.latitude }}</p>
+            <p>Longitude: {{ sortie.lieu.longitude }}</p>
         </div>
+
+        <h2>Participants ({{ sortie.participants|length }})</h2>
+        <ul>
+            {% for participant in sortie.participants %}
+                <li>{{ participant.nom }} {{ participant.prenom }}</li>
+            {% endfor %}
+        </ul>
+
+        {% if app.user and sortie.dateLimiteInscription > 'now' %}
+            {% if app.user in sortie.participants %}
+                <a href="{{ path('sortie_desister', {'id': sortie.id}) }}" class="btn btn-danger">Se désister</a>
+            {% else %}
+                <a href="{{ path('inscription_sortie', {'id': sortie.id}) }}" class="btn btn-success">S'inscrire</a>
+            {% endif %}
+        {% endif %}
+
     </div>
 {% endblock %}
-
-

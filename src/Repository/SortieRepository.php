@@ -39,6 +39,30 @@ class SortieRepository extends ServiceEntityRepository
         }
     }
 
+    public function trouverArchivable() : array{
+        $date = new \DateTime();
+
+        $qb = $this->createQueryBuilder('s')
+        ->andWhere('DATE_DIFF(s.dateHeureDebut, :date) <30')
+            ->setParameter('date', $date)
+        ->andWhere('s.etat != 5');
+
+        $query = $qb->getQuery();
+        return $query->execute();
+    }
+    public function trouverFermable() : array{
+        $date = new \DateTime();
+
+        $qb = $this->createQueryBuilder('s')
+            ->andWhere('s.dateHeureDebut > :date')
+            ->setParameter('date', $date)
+            ->andWhere('s.etat != 5');
+
+        $query = $qb->getQuery();
+        return $query->execute();
+    }
+
+
 
 //    /**
 //     * @return Sortie[] Returns an array of Sortie objects

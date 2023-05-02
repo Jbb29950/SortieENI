@@ -59,6 +59,11 @@ class LieuController extends AbstractController
     #[Route('/modifierLieu', name: ' modifier_lieu')]
     public function modifierLieu(EntityManagerInterface $entityManager,LieuRepository $repo,Request $request, VilleRepository $vr): Response
     {
+        if(!$this->isGranted('ROLE_ADMIN')){
+            $this->addFlash('fail', 'Vous n\'avez pas la permission petit coquins');
+            return $this->render('home/home.html.twig', [
+                'controller_name' => 'LieuController',]);
+        }
         $lieu = new Lieu();
         $creerLieuForm = $this->createForm(LieuType::class,$lieu);
         $creerLieuForm->handleRequest($request);

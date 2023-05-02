@@ -8,7 +8,7 @@ use App\Form\AnnulerSortieType;
 use App\Form\CreerSortieType;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
-use Controller\ModifierSortieType;
+use App\Controller\ModifierSortieType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -64,9 +64,15 @@ class SortieController extends AbstractController
 
 
     #[Route('/sortie/modifier/{id}', name: 'modifier_Sortie')]
-    public function modifierSortie(Request $request, Sortie $sortie, EntityManagerInterface $entityManager): Response
+    public function modifierSortie(Request $request, Sortie $sortie = null, EntityManagerInterface $entityManager): Response
     {
-        $modifierSortieForm = $this->createForm(ModifierSortieType::class, $sortie);
+        // Vérifier si la variable $sortie est null
+        if (!$sortie) {
+            // Si $sortie est null, rediriger vers une page d'erreur 404
+            throw $this->createNotFoundException('La sortie demandée n\'existe pas');
+        }
+
+        $modifierSortieForm = $this->createForm(\App\Controller\ModifierSortieType::class, $sortie);
         $modifierSortieForm->handleRequest($request);
 
         if ($modifierSortieForm->isSubmitted() && $modifierSortieForm->isValid()) {
@@ -83,10 +89,25 @@ class SortieController extends AbstractController
         ]);
     }
 
+
     #[Route('/sortie/annuler/{id}', name: 'annuler_Sortie')]
     public function annulerSortie(Request $request, EntityManagerInterface $entityManager, SortieRepository $sortieRepository, int $id): Response
     {
         $sortie = $sortieRepository->find($id);
+
+        // Vérifier que l'utilisateur connecté est l'organisateur de la sortie
+        $user = $this->getUser();
+        if (!$sortie->getOrganisateur()->getId() == $user->getId()) {
+            $this->addFlash('error', 'Vous n\'êtes pas autorisé à annuler cette sortie.');
+            return $this->redirectToRoute('afficher_Sortie', ['id' => $sortie->getId()]);
+        }
+
+        // Vérifier que la sortie n'a pas encore commencé
+        $now = new \DateTime();
+        if ($sortie->getDateHeureDebut() <= $now) {
+            $this->addFlash('error', 'La sortie a déjà commencé, vous ne pouvez plus l\'annuler.');
+            return $this->redirectToRoute('afficher_Sortie', ['id' => $sortie->getId()]);
+        }
 
         $annulerSortieForm = $this->createForm(AnnulerSortieType::class);
 
@@ -95,21 +116,36 @@ class SortieController extends AbstractController
         if ($annulerSortieForm->isSubmitted() && $annulerSortieForm->isValid()) {
             $motif = $annulerSortieForm->get('motif')->getData();
 
-            $sortie->setEtat('Annulée');
+            $sortie->setMotifAnnulation($motif);
+            $sortie->setEtat('annulé');
             $entityManager->flush();
 
             $this->addFlash('success', 'La sortie a été annulée avec succès.');
 
-            return $this->redirectToRoute('app_home', ['id' => $sortie->getId()]);
+            return $this->redirectToRoute('afficher_Sortie', ['id' => $sortie->getId()]);
         }
 
         return $this->render('sortie/annulerSortie.html.twig', [
             'form' => $annulerSortieForm->createView(),
             'sortie' => $sortie,
         ]);
-
-
     }
+    public function test(EntityManagerInterface $entityManager)
+    {
+        $sortiee = new sortie();
+        $sortiee->setNom('england');
+        $sortiee->setDateHeureDebut(new \DateTime());
+        $sortiee->setDuree(30);
+        $sortiee->setdatelimiteinscription(new\Datetime("+1"));
+        $sortiee->setnbinscription(5);
+        $sortiee->setinfosSortie();
+        return $this->render('sortie/creerSortie.html.twig',[
+        'sortiee' => $sortiee,]);
+
+$entityManager->persist($sortiee);
+$entityManager->flush();
+    }
+    
 }
 
 

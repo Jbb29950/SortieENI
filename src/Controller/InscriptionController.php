@@ -18,7 +18,7 @@ class InscriptionController extends AbstractController
     public function inscriptionSortie(Request $request, Sortie $sortie, EntityManagerInterface $entityManager): Response
     {
         // Vérifier que la sortie est ouverte et que la date limite d'inscription n'est pas dépassée
-        if ($sortie->getEtat() != "ouverte" || $sortie->getDateLimiteInscription() < new \DateTime()) {
+        if ($sortie->getEtat()->getId() != '2' || $sortie->getDateLimiteInscription() < new \DateTime()) {
             $this->addFlash('error', 'La date limite d\'inscription est dépassée ou la sortie est fermée.');
             return $this->redirectToRoute('afficher_Sortie', ['id' => $sortie->getId()]);
         }
@@ -29,6 +29,7 @@ class InscriptionController extends AbstractController
 
         // Ajouter l'utilisateur à la liste des participants de la sortie
         $sortie->addParticipant($participant);
+        $entityManager->persist($participant);
         $entityManager->flush();
 
         $this->addFlash('success', 'Inscription réussie.');
@@ -36,25 +37,55 @@ class InscriptionController extends AbstractController
         return $this->redirectToRoute('afficher_Sortie', ['id' => $sortie->getId()]);
     }
 
-    #[Route('/sortie/desister/{id}', name: 'desister_sortie')]
+    #[Route('/sortie/{id}/desister', name: 'sortie_desister', requirements: ['id' => '\d+'])]
+
     public function desisterSortie(Request $request, Sortie $sortie, EntityManagerInterface $entityManager): Response
     {
-        // Vérifier que la sortie n'a pas encore commencé
-        if ($sortie->getDateHeureDebut() <= new \DateTime()) {
-            $this->addFlash('error', 'La sortie a déjà commencé.');
-            return $this->redirectToRoute('afficher_Sortie', ['id' => $sortie->getId()]);
-        }
-
         // Récupérer l'utilisateur connecté avec le repo
         $user = $this->getUser();
         $participant = $entityManager->getRepository(Participant::class)->findOneBy(['id' => $user->getId()]);
 
-        // Retirer l'utilisateur de la liste des participants de la sortie
+        // Vérifier que l'utilisateur est bien inscrit à la sortie
+        if (!$sortie->getParticipants()->contains($participant)) {
+            $this->addFlash('error', 'Vous ne pouvez pas vous désister d\'une sortie à laquelle vous n\'êtes pas inscrit.');
+            return $this->redirectToRoute('afficher_Sortie', ['id' => $sortie->getId()]);
+        }
+
+        // Vérifier que la sortie n'a pas encore commencé
+        $now = new \DateTime();
+        if ($sortie->getDateHeureDebut() <= $now) {
+            $this->addFlash('error', 'La sortie a déjà commencé, vous ne pouvez plus vous désister.');
+            return $this->redirectToRoute('afficher_Sortie', ['id' => $sortie->getId()]);
+        }
+
+        // Récupérer le motif d'annulation depuis le formulaire
+        $motif = $request->request->get('motif');
+        if (empty($motif)) {
+            $this->addFlash('error', 'Vous devez fournir un motif d\'annulation.');
+            return $this->redirectToRoute('afficher_Sortie', ['id' => $sortie->getId()]);
+        }
+
+        // Vérifier que la date limite d'inscription n'est pas dépassée
+        $dateLimiteInscription = $sortie->getDateLimiteInscription();
+        if ($dateLimiteInscription !== null && $dateLimiteInscription <= $now) {
+            $this->addFlash('error', 'La date limite d\'inscription est dépassée, vous ne pouvez plus vous désister.');
+            return $this->redirectToRoute('afficher_Sortie', ['id' => $sortie->getId()]);
+        }
+
+        // Ajouter une place disponible si la sortie était complète
+        if ($sortie->getParticipants()->count() >= $sortie->getNbInscriptionsMax()) {
+            $sortie->setNbInscriptionsMax($sortie->getNbInscriptionsMax() + 1);
+        }
+
+        // Désister l'utilisateur de la sortie
         $sortie->removeParticipant($participant);
+        $sortie->setMotifAnnulation($motif);
+        $sortie->setEtat("fermé");
         $entityManager->flush();
 
-        $this->addFlash('success', 'Désistement réussi.');
+        $this->addFlash('success', 'Votre désistement a été enregistré.');
 
-        return $this->redirectToRoute('modifier_Sortie', ['id' => $sortie->getId()]);
+        return $this->redirectToRoute('afficher_Sortie', ['id' => $sortie->getId()]);
     }
+
 }
