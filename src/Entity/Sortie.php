@@ -50,6 +50,8 @@ class Sortie
     #[ORM\JoinColumn(nullable: false)]
     private ?Etat $etat = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private $motifAnnulation;
     public function __construct()
     {
         $this->participants = new ArrayCollection();
@@ -192,6 +194,16 @@ class Sortie
     {
         $this->etat = $etat;
 
+        return $this;
+    }
+
+    public function getMotifAnnulation(): ?string
+    {
+        return $this->motifAnnulation;
+    }
+    public function setMotifAnnulation(?string $motifAnnulation): self
+    {
+        $this->motifAnnulation = $motifAnnulation;
         return $this;
     }
 }
