@@ -1,25 +1,25 @@
 {% extends 'base.html.twig' %}
-{% block stylesheets %} <link rel="stylesheet" href="{{ asset('css/form.css') }}">{% endblock %}
-{% block title %}Annuler la sortie {{ sortie.nom }}{% endblock %}
 
-{% block body %}
-
-    <h1>Annuler la sortie {{ sortie.nom }}</h1>
-
-        <p>Nom de la sortie: {{ sortie.nom }}</p>
-        <p>Date de la sortie : {{ sortie.dateHeureDebut|date('d/m/Y H:i') }}</p>
-        <p>Campus : {{ sortie.campus.nom }}</p>
-        <p>Lieu : {{ sortie.lieu.nom }}</p>
-
-        {{ form_start() }}
-
-        {{ form_row(form.motif) }}
-
-    <button type="submit" class="btn">Enregistrer</button>
-    <button type="submit" class="btn">Annuler</button>
-
-        {{ form_end(form) }}
-
+{% block title %}
+    Annuler la sortie {{ sortie.nom }}
 {% endblock %}
 
+{% block body %}
+    <h1>Annuler la sortie {{ sortie.nom }}</h1>
 
+    <p>Nom de la sortie : {{ sortie.nom }}</p>
+    <p>Date de la sortie : {{ sortie.dateHeureDebut|date('d/m/Y H:i') }}</p>
+    <p>Lieu : {{ sortie.lieu.nom }}</p>
+
+    {{ form_start(form) }}
+
+    {{ form_row(form.motif) }}
+
+    <button type="submit" class="btn">Enregistrer</button>
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('supprimer_Sortie', {'id': sortie.id}) }}" class="btn btn-danger">Annuler la sortie</a>
+    {% endif %}
+
+    {{ form_end(form) }}
+{% endblock %}

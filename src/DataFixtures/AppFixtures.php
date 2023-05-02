@@ -51,6 +51,10 @@ class AppFixtures extends Fixture
         $archiv->setLibelle('Archivé');
         $manager->persist($archiv);
 
+        $annul = new Etat();
+        $annul->setLibelle('Annulé');
+        $manager->persist($annul);
+
         //création de deux campus
         $campus1 = new Campus();
         $campus1->setNom('SAINT HERBLAIN');

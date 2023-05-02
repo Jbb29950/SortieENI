@@ -42,6 +42,9 @@
                         {% if sortie.getParticipants().contains(app.user) %}<a href="{{ path('sortie_desister',{'id':sortie.id}) }}">Se désister</a>{% endif %}
                         {% if sortie.getOrganisateur == app.user%}<a href="{{ path('modifier_Sortie',{'id':sortie.id}) }}">Modifier</a>{% endif %}
                         {% if not sortie.getParticipants().contains(app.user) %}<a href="{{ path('inscription_sortie', {'id':sortie.id}) }}">S'inscrire</a>{% endif %}
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('supprimer_Sortie', {'id':sortie.id}) }}">Supprimer une sortie</a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}
