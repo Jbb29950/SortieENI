@@ -22,6 +22,7 @@ class RegistrationController extends AbstractController
                              CampusRepository $campusRepo, EntityManagerInterface $entityManager): Response
     {
         $user = new Participant();
+        $user->setRoles(["ROLE_USER"]);
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 

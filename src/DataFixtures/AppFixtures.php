@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+
 use App\Entity\Campus;
 use App\Entity\Etat;
 use App\Entity\Lieu;
@@ -9,17 +10,22 @@ use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Entity\Ville;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Config\Security\PasswordHasherConfig;
+use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactory;
+
 
 class AppFixtures extends Fixture
 {
 
     public function load(ObjectManager $manager): void
     {
+
+        //Chargement du PasswordHasher
+        $factory = new PasswordHasherFactory([
+            'auto'=>['algorithm'=>'auto']
+        ]);
+        $hasher = $factory->getPasswordHasher('auto');
+        
         //ALTER TABLE tablename AUTO_INCREMENT = 1
         $conn = $manager->getConnection();
 
@@ -123,49 +129,53 @@ class AppFixtures extends Fixture
         $pomme = new Participant();
         $pomme->setNom('Pomme');
         $pomme->setPrenom('Pistache');
-        $pomme->setPassword('pommepistache');
+        $pomme->setPassword($hasher->hash('pommepistache'));
         $pomme->setActif(true);
         $pomme->setCampus($campus1);
         $pomme->setTelephone('0606060606');
         $pomme->setEmail('pomme@pistache.fr');
         $pomme->setPseudo('PommePistache');
         $pomme->setAdministrateur(true);
+        $pomme->setRoles(['ROLE_ADMIN']);
         $manager->persist($pomme);
 
         $choco = new Participant();
         $choco->setNom('Chocolat');
         $choco->setPrenom('Banane');
-        $choco->setPassword('chocolatbanane');
+        $choco->setPassword($hasher->hash('chocolatbanane'));
         $choco->setActif(true);
         $choco->setCampus($campus1);
         $choco->setTelephone('0707070707');
         $choco->setEmail('chocolat@banane.fr');
         $choco->setPseudo('ChocolatBanane');
         $choco->setAdministrateur(false);
+        $choco->setRoles(['ROLE_USER']);
         $manager->persist($choco);
 
         $citron = new Participant();
         $citron->setNom('Citron');
         $citron->setPrenom('Cassis');
-        $citron->setPassword('citroncassis');
+        $citron->setPassword($hasher->hash('citroncassis'));
         $citron->setActif(true);
         $citron->setCampus($campus2);
         $citron->setTelephone('0808080808');
         $citron->setEmail('citron@cassis.fr');
         $citron->setPseudo('CitronCassis');
         $citron->setAdministrateur(false);
+        $citron->setRoles(['ROLE_USER']);
         $manager->persist($citron);
 
         $fraise = new Participant();
         $fraise->setNom('Fraise');
         $fraise->setPrenom('Vanille');
-        $fraise->setPassword('fraisevanille');
+        $fraise->setPassword($hasher->hash('fraisevanille'));
         $fraise->setActif(true);
         $fraise->setCampus($campus2);
         $fraise->setTelephone('0909090909');
         $fraise->setEmail('fraise@vanille.fr');
         $fraise->setPseudo('FraiseVanille');
         $fraise->setAdministrateur(false);
+        $fraise->setRoles(['ROLE_USER']);
         $manager->persist($fraise);
         //Creation de deux sorties
 
@@ -205,9 +215,6 @@ class AppFixtures extends Fixture
         $picole->setInfosSortie('Il va faire chaud mais il n\'y aura pas d\'eau');
         $manager->persist($picole);
 
-
         $manager->flush();
     }
 }
-
-

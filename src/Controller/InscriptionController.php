@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Etat;
 use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Repository\ParticipantRepository;
@@ -38,7 +39,6 @@ class InscriptionController extends AbstractController
     }
 
     #[Route('/sortie/{id}/desister', name: 'sortie_desister', requirements: ['id' => '\d+'])]
-
     public function desisterSortie(Request $request, Sortie $sortie, EntityManagerInterface $entityManager): Response
     {
         // Récupérer l'utilisateur connecté avec le repo
@@ -80,12 +80,13 @@ class InscriptionController extends AbstractController
         // Désister l'utilisateur de la sortie
         $sortie->removeParticipant($participant);
         $sortie->setMotifAnnulation($motif);
-        $sortie->setEtat("fermé");
+        $sortie->setEtat($entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Fermé']));
         $entityManager->flush();
 
         $this->addFlash('success', 'Votre désistement a été enregistré.');
 
-        return $this->redirectToRoute('afficher_Sortie', ['id' => $sortie->getId()]);
+        return $this->redirectToRoute('app_home', ['id' => $sortie->getId()]);
     }
+
 
 }

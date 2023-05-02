@@ -1,22 +1,128 @@
-*{
-    margin: 0;
-    padding: 0;
+body {
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+    color: #333;
 }
-.table{
-    max-width: 35%;
-}
-table{
-    display: block;
-    line-height: 10px;
-    columns: fit-content;
-}
-.col_2{
-    width: 5px;
-}
-.btn-link{
 
-    color: black;
+h1 {
+    font-size: 36px;
+    font-weight: bold;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    color: #333;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    letter-spacing: 1px;
+    line-height: 1.5;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 10px;
+
+    background-color: #f0f0f0;
+    text-align: center;
+    margin: 0 auto;
 }
-h1{
+
+h1:hover {
+
+    text-decoration: underline;
+    background-color: #ccc;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+h2 {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    letter-spacing: 1px;
+    line-height: 1.5;
+    text-align: -webkit-left;
+    font-family: Arial, sans-serif;
+    font-size: 22px;
+    font-weight: bolder;
+    font-style: italic;
+    text-transform:full-width;
+    color: #330f0f;
+    background-color: #fff;
+    border-bottom: 2px solid #ccc;
+    padding: 10px;
+    margin-left: 20px;
+    margin-right: auto;
+
+
+}
+
+h2:hover {
+    color: #fff;
+    background-color: #074080;
+}
+
+form[name="nom"] {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    margin: 1rem 0;
+}
+
+label[for="nom"] {
+    margin-right: 1rem;
+}
+
+input[type="text"] {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button[type="submit"] {
+    padding: 0.5rem 1rem;
+    background-color: #0d4d91;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+button[type="submit"]:hover {
+    background-color: #0069d9;
+}
+
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+}
+
+th {
+    background-color: #074080;
+    color: #fff;
+    padding: 0.5rem;
+    text-align: left;
+}
+
+td {
+    border: 1px solid #ccc;
+    padding: 0.5rem;
+}
+
+
+.col_2 {
+    width: 10%;
     text-align: center;
 }
+
+
+.btn {
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+
+
+.btn-link:hover {
+    background-color: #e30404;
+}
+.btn-link {
+    color: #cec2c2;
+}
+

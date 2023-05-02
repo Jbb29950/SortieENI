@@ -4,53 +4,52 @@
 
 {% block body %}
 
-<div class="example-wrapper">
-    {% if is_granted('ROLE_USER') %}
-    <h1>Bienvenue {{ app.user.prenom}} <br>
-        sur les sorties de l'ENI!</h1>
-    {% else %}
-        <h1>Bienvenue sur les sorties ENI !</h1>
-{% endif %}
-    <style>
-        td{
-            border: 1px solid;
-        }
-    </style>
-    <?php
-    mysql_connect('127.0.01','root' , '');
-    mysql_select_db("sortieeni");
-    $requete= "
-    select *
-    from SortieEni
-    ";
-    $result = mysql_query($requete);
-    if(|$result) {
-    echo 'erreur lors de l\'execution de la requete'.mysql_error();
-    } else {
-    ?>
-    <table>
-        <?php while($ligne =my sql_fetch_array($result) ) {
-?>
-        <tr>
-            <td> <?php echo $ligne ['page'] ?> </td>
-            <td> <?php echo $ligne['nom de la sortie']?></td>
-            <td> <?php echo $ligne ['date dela sortie']?></td>
-            <td> <?php echo $ligne ['cloture']?></td>
-            <td> <?php echo $ligne ['inscrit/places']?></td>
-            <td> <?php echo $ligne ['etat']?></td>
-            <td> <?php echo $ligne ['inscrit']?></td>
-            <td> <?php echo $ligne ['organissateur']?></td>
-            <td> <?php echo $ligne ['actions']?></td>
-        </tr>
-        <?php } ?>
-    </table>
+    <div class="example-wrapper">
+        {% if is_granted('ROLE_USER') %}
+        <h1>Bienvenue {{ app.user.prenom}} <br>
+            sur les sorties de l'ENI!</h1>
+        {% else %}
+            <h1>Bienvenue sur les sorties ENI !</h1>
+    {% endif %}
+    </div>
+    <body>
+    <section class="affichable">
+        <table>
+            <thead>
+                <tr>
+                <th scope="col">Nom de la sortie</th>
+                <th scope="col">Date de la sortie</th>
+                <th scope="col">Clôture</th>
+                <th scope="col">inscrits/places</th>
+                <th scope="col">Etat</th>
+                <th scope="col">Inscrit</th>
+                <th scope="col">Organisateur</th>
+                <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for sortie in affichables %}
+                <tr>
+                    <th scope="row">{{ sortie.nom }}</th>
+                    <td>{{ sortie.dateHeureDebut|date('d/m/Y H:i') }}</td>
+                    <td>{{ sortie.dateLimiteInscription|date('d/m/Y') }}</td>
+                    <td>{{sortie.participants|length }}/{{ sortie.nbInscriptionsMax }}</td>
+                    <td>{{ sortie.etat.libelle }}</td>
+                    <td>{% if sortie.getParticipants().contains(app.user) %}X{% endif %}</td>
+                    <td>{{ sortie.organisateur.nom }}</td>
+                    <td>
+                        <a href="{{ path('afficher_Sortie',{'id':sortie.id}) }}">Afficher</a>
+                        {% if sortie.getParticipants().contains(app.user) %}<a href="{{ path('sortie_desister',{'id':sortie.id}) }}">Se désister</a>{% endif %}
+                        {% if sortie.getOrganisateur == app.user%}<a href="{{ path('modifier_Sortie',{'id':sortie.id}) }}">Modifier</a>{% endif %}
+                        {% if not sortie.getParticipants().contains(app.user) %}<a href="{{ path('inscription_sortie', {'id':sortie.id}) }}">S'inscrire</a>{% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
+    </section>
+    </body>
 
-
-
-
-
-
-</div>
 {% endblock %}
 
