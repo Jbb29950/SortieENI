@@ -62,12 +62,17 @@ footer {
     background-color: #2c2828;
 
 }
-img {
+.logo {
     width: 100px;
     height: auto;
     position: absolute;
     top: 0;
     right: 0;
+}
+
+#Photo-profil{
+    width:200px;
+    height: 200px;
 }
 
 
