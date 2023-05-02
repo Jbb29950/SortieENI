@@ -12,15 +12,19 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactory;
 
+
 class AppFixtures extends Fixture
 {
 
     public function load(ObjectManager $manager): void
     {
+
+        //Chargement du PasswordHasher
         $factory = new PasswordHasherFactory([
-            'auto'=>['algorithm' => 'auto']
+            'auto'=>['algorithm'=>'auto']
         ]);
         $hasher = $factory->getPasswordHasher('auto');
+        
         //ALTER TABLE tablename AUTO_INCREMENT = 1
         $conn = $manager->getConnection();
 
