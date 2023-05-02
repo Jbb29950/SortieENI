@@ -28,10 +28,16 @@ class UpdateProfileType extends AbstractType
                 'mapped'=>false,
                 'required'=>false,
                 'constraints'=>[
-                    new File(['maxSize'=>'2048k'
+                    new File(['maxSize'=>'2048k',
+                      #  'mimeTypes' =>[
+                      #      'application/jpeg',
+                      #      'application/jpg'
+
+                      #  ],
+                      #  'mimeTypesMessage'=>'Veuillez insérer un format valide',
                     ])
-                ]
-        ]       )
+                ],
+        ])
 
             #->add('sortie')
             ->add('password', RepeatedType::class,[
