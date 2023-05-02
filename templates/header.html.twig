@@ -7,15 +7,11 @@
         <li class="nav-link"><a href="{{ path('app_utilisateur') }}" title="Mon Profil">Mon Profil</a></li>
         <li class="nav-link"><a href="{{ path('app_logout') }}" title="Déconnexion">Se déconnecter</a></li>
         <li class="nav-link"><a href="{{ path('creer_Sortie') }}" title="Créer une sortie">Créer une sortie</a></li>
-    {% endif %}
-        {% if sortie is defined %}
+        <!---{% if sortie is defined and sortie.id is defined %}-->
             <li class="nav-link"><a href="{{ path('modifier_Sortie', {'id': sortie.id}) }}" title="Modifier une sortie">Modifier une sortie</a></li>
             <li class="nav-link"><a href="{{ path('afficher_Sortie', {'id': sortie.id}) }}" title="Afficher une sortie">Afficher une sortie</a></li>
-        {% endif %}
-        {% if not app.user %}
-            <li class="nav-link"><a href="{{ path('app_login') }}" title="Se connecter">Se connecter</a></li>
-        {% endif %}
-    {% if is_granted('ROLE_ADMIN') %}
-    <li class="nav-link"><a href="{{ path('app_register') }}" title="Créer compte">Créer un compte</a></li>
+    {% else %}
+        <li class="nav-link"><a href="{{ path('app_login') }}" title="">Se connecter</a></li>
+        <li class="nav-link"><a href="{{ path('app_register') }}" title="Créer compte">Créer un compte</a></li>
     {% endif %}
 </ul>
