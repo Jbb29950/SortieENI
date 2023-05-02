@@ -8,16 +8,16 @@
         <h1 class="titre_profil">Votre profil</h1>
                {% if app.user %}
                    <div class="profil">
-                       <h2>Votre photo de profil : <img src=" {{ app.user.photoProfil }}"/></h2>
-                   <h2>Votre nom : {{ app.user.nom }}</h2>
-                   <h2>Votre prénom : {{ app.user.prenom}}</h2>
-                   <h2>Votre telephone : {{ app.user.telephone }}</h2>
-                   <h2>Votre email : {{ app.user.email }}</h2>
-                   <h2>Votre campus : {{ app.user.campus.nom }}</h2>
-                       {% if app.user.pseudo %}
-                   <h2>Votre pseudo : {{ app.user.pseudo }}</h2>
-                        {% endif %}
-                       <a class="btn btn-success" href="{{ path('modifier_profil') }}" >Modifier votre profil</a>
+                       <h2>Votre photo de profil : <img src=" {{ (app.user.photoProfil) }}" width="200px" height="200px"/></h2>
+                       <h2>Votre nom : {{ app.user.nom }}</h2>
+                       <h2>Votre prénom : {{ app.user.prenom}}</h2>
+                       <h2>Votre telephone : {{ app.user.telephone }}</h2>
+                       <h2>Votre email : {{ app.user.email }}</h2>
+                       <h2>Votre campus : {{ app.user.campus.nom }}</h2>
+                           {% if app.user.pseudo %}
+                       <h2>Votre pseudo : {{ app.user.pseudo }}</h2>
+                            {% endif %}
+                           <a class="btn btn-success" href="{{ path('modifier_profil') }}" >Modifier votre profil</a>
                    </div>
                {% endif %}
     </section>

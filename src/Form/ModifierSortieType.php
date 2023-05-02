@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Form;
 
 use App\Entity\Etat;
 use App\Entity\Sortie;

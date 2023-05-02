@@ -36,15 +36,24 @@ class UtilisateurController extends AbstractController
         dump($user);
         if ($modifierProfilForm -> isSubmitted() && $modifierProfilForm -> isValid()) {
             $pseudo = $user -> getPseudo();
+            $photoFile = $modifierProfilForm ['photo_profil'] -> getData();
 
+            if($photoFile) {
 
-            $photoFile = $modifierProfilForm -> get('photo_profil') -> getData();
-            $ficherPhoto = md5(uniqid()) . '.' . $photoFile -> guessExtension();
-            $photoFile -> move(
-                $this -> getParameter('photo_dir'),
-                $ficherPhoto
-            );
+                $originalFileName = pathinfo($photoFile->getClientOriginalName(),PATHINFO_FILENAME);
+                $safeFileName=transliterator_transliterate('Any-Latin;Latin-ASCII;[^A-Za-z0-9_] remove;Lower()',$photoFile);
+                $newFileName=$originalFileName.'-'.uniqid().'-'.$photoFile->guessExtension();
+                try {
+                    $photoFile -> move(
+                        $this -> getParameter('photo_dir'),
+                        $newFileName
 
+                    );
+                }
+                catch (FileException $e){
+
+                }
+            }
 
             if ($pseudo) {
                 if ($participantRepository -> findOneBy(['pseudo' => $pseudo])) {
@@ -56,7 +65,9 @@ class UtilisateurController extends AbstractController
                 }
 
             }
-            dd($user);
+
+            $user->setPhotoProfil($newFileName);
+
             $entityManager -> persist($user);
             $entityManager -> flush();
 
