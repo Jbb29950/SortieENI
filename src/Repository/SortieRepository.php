@@ -62,6 +62,14 @@ class SortieRepository extends ServiceEntityRepository
         return $query->execute();
     }
 
+    public function trouverAffichable() : array {
+
+        $qb = $this->createQueryBuilder('s')
+            ->andWhere('s.etat != 5');
+
+        return $qb->getQuery()->execute();
+    }
+
 
 
 //    /**
