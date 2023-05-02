@@ -13,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\PasswordHasherInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
@@ -34,14 +34,15 @@ class UtilisateurController extends AbstractController
     public function modifierProfil(Request $request, EntityManagerInterface $entityManager,
                                    SluggerInterface $slugger,
                                    ParticipantRepository $participantRepository,
-                                   PasswordHasherInterface $passwordHasher): Response{
+                                   UserPasswordHasherInterface $passwordHasher): Response{
         $user = $this -> getUser();
         $modifierProfilForm = $this -> createForm(UpdateProfileType::class, $user);
         $modifierProfilForm -> handleRequest($request);
 
         if ($modifierProfilForm -> isSubmitted() && $modifierProfilForm -> isValid()) {
             $pseudo = $user -> getPseudo();
-            $mdp = $passwordHasher->hash($modifierProfilForm->get('password')->getData());
+            $plainpassword = $modifierProfilForm->get('password')->getData();
+            $mdp = $passwordHasher->hashPassword($user,$plainpassword);
             assert($user instanceof Participant);
             $user->setPassword($mdp);
             $photoFile = $modifierProfilForm ->get('photo_profil') -> getData();
@@ -63,7 +64,8 @@ class UtilisateurController extends AbstractController
                 }$user->setPhotoProfil($newFileName);
             }
 
-            if ($pseudo) {
+            if ($this->getUser()->getPseudo =! $pseudo) {
+
                 if ($participantRepository -> findOneBy(['pseudo' => $pseudo])) {
                     $this -> addFlash('fail', 'Pseudo déjà utilisé');
                     return $this -> render('utilisateur/modificationProfil.html.twig', [
