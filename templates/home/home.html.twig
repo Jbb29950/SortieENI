@@ -11,45 +11,6 @@
     {% else %}
         <h1>Bienvenue sur les sorties ENI !</h1>
 {% endif %}
-    <style>
-        td{
-            border: 1px solid;
-        }
-    </style>
-    <?php
-    mysql_connect('127.0.01','root' , '');
-    mysql_select_db("sortieeni");
-    $requete= "
-    select *
-    from SortieEni
-    ";
-    $result = mysql_query($requete);
-    if(|$result) {
-    echo 'erreur lors de l\'execution de la requete'.mysql_error();
-    } else {
-    ?>
-    <table>
-        <?php while($ligne =my sql_fetch_array($result) ) {
-?>
-        <tr>
-            <td> <?php echo $ligne ['page'] ?> </td>
-            <td> <?php echo $ligne['nom de la sortie']?></td>
-            <td> <?php echo $ligne ['date dela sortie']?></td>
-            <td> <?php echo $ligne ['cloture']?></td>
-            <td> <?php echo $ligne ['inscrit/places']?></td>
-            <td> <?php echo $ligne ['etat']?></td>
-            <td> <?php echo $ligne ['inscrit']?></td>
-            <td> <?php echo $ligne ['organissateur']?></td>
-            <td> <?php echo $ligne ['actions']?></td>
-        </tr>
-        <?php } ?>
-    </table>
-
-
-
-
-
-
 
 </div>
 {% endblock %}

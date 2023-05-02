@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+
 use App\Entity\Campus;
 use App\Entity\Etat;
 use App\Entity\Lieu;
@@ -214,9 +215,6 @@ class AppFixtures extends Fixture
         $picole->setInfosSortie('Il va faire chaud mais il n\'y aura pas d\'eau');
         $manager->persist($picole);
 
-
         $manager->flush();
     }
 }
-
-

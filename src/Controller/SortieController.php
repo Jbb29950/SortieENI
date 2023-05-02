@@ -130,8 +130,6 @@ class SortieController extends AbstractController
             'sortie' => $sortie,
         ]);
     }
-
-
     public function test(EntityManagerInterface $entityManager)
     {
         $sortiee = new sortie();
@@ -147,6 +145,7 @@ class SortieController extends AbstractController
 $entityManager->persist($sortiee);
 $entityManager->flush();
     }
-
+    
 }
+
 

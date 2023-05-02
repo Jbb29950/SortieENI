@@ -1,67 +1,68 @@
-.formulaire_inscription{
-  background-color: #5eb5e0;
-
-}
-label{
-    display: block;
-    text-align: center;
-    margin-top: 30px;
-    font-size: 35px;
-}
-input{
-    width:30%;
-    margin-left: 35%;
-    font-size: 30px;
-    height: 20px;
-    padding-top: 15px;
-    padding-bottom:15px;
-    padding-left: 5px;
+.formulaire_inscription {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 2px solid #ccc;
     border-radius: 5px;
+    font-family: Arial, sans-serif;
 }
-.titre_formulaire{
-    text-align: center;
-    color: #B0413E;
-    text-decoration: underline;
-    font-size: 40px;
-}
-button{
 
+
+.formulaire_inscription label {
+    display: inline-block;
+    background-color: #f5f5f5;
+    color: #333;
+    padding: 8px 16px;
+    border-radius: 8px;
+}
+
+.formulaire_inscription input[type="text"],
+.formulaire_inscription input[type="email"],
+.formulaire_inscription input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 16px;
+}
+
+
+
+ button {
     min-width: 30%;
-
     max-width: 250px;
-    margin-left:35%;
+    margin-left: 35%;
     margin-top: 40px;
     margin-bottom: 20px;
     font-size: 200%;
     border-radius: 5px;
     overflow: hidden;
-background-color: #B0413E;
+    background-color: #B0413E;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
 
+ button:hover {
+    color: #ff0000;
 }
 
 
-button:hover{
-    color: red;
-}
 
-.container_profil h1 {
+h1 {
+    font-size: 48px;
+    font-weight: bold;
+    color: #333;
     text-align: center;
+    margin-bottom: 20px;
+    font-family: Arial, sans-serif;
 }
 
-.modifier_profil{
-    width:100px;
-    height: 50px;
-    font-size: 20px;
-}
-.profil h2{
-    text-align: center;
-}
-#campus{
 
-    height: 50px;
-    min-width: 30%;
-    margin-left: 35%;
-    margin-top: 30px;
-    text-align: center;
-
+h1:hover {
+    color: #c5b5b5;
+    cursor: pointer;
 }

@@ -1,4 +1,4 @@
-<img class="logo" src="{{ asset('img/logo-social.png') }}" alt="Logo du site" height="120" width="120">
+<img class="logo" src="{{ asset('img/logo.jpg') }}" alt="Logo du site">
 <ul class="nav">
     <li class="nav-link"><a href="{{ path('app_lieu_modifier_Ville') }}" title="Villes">Villes</a></li>
     <li class="nav-link"><a href="{{ path('app_campus') }}" title="Campus">Campus</a></li>
@@ -14,5 +14,6 @@
     {% else %}
         <li class="nav-link"><a href="{{ path('app_login') }}" title="">Se connecter</a></li>
         <li class="nav-link"><a href="{{ path('app_register') }}" title="Créer compte">Créer un compte</a></li>
+
     {% endif %}
 </ul>
