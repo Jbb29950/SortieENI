@@ -29,27 +29,6 @@ class AppFixtures extends Fixture
         //ALTER TABLE tablename AUTO_INCREMENT = 1
         $conn = $manager->getConnection();
 
-        $sql = 'ALTER TABLE ville AUTO_INCREMENT = 1';
-        $conn->prepare($sql)->executeQuery();
-
-        $sql = 'ALTER TABLE lieu AUTO_INCREMENT = 1';
-        $conn->prepare($sql)->executeQuery();
-
-        $sql = 'ALTER TABLE campus AUTO_INCREMENT = 1';
-        $conn->prepare($sql)->executeQuery();
-
-        $sql = 'ALTER TABLE etat AUTO_INCREMENT = 1';
-        $conn->prepare($sql)->executeQuery();
-
-        $sql = 'ALTER TABLE sortie AUTO_INCREMENT = 1';
-        $conn->prepare($sql)->executeQuery();
-
-        $sql = 'ALTER TABLE participant AUTO_INCREMENT = 1';
-        $conn->prepare($sql)->executeQuery();
-
-        $sql = 'ALTER TABLE participant_sortie AUTO_INCREMENT = 1';
-        $conn->prepare($sql)->executeQuery();
-
 
         //Création des états
         $enCreation = new Etat();
