@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Import CSV{% endblock %}
+
+{% block body %}
+    <h1>Import CSV</h1>
+
+    {{ form_start(form) }}
+
+    {{ form_label(form.fichier) }}
+    {{ form_widget(form.fichier) }}
+    {{ form_errors(form.fichier) }}
+
+    <button type="submit" class="btn btn-primary">Importer</button>
+
+    {{ form_end(form) }}
+
+{% endblock %}
+
