@@ -1,0 +1,72 @@
+[
+    {
+        "nom": "Dubois",
+        "prenom": "Lucie",
+        "pseudo": "lucie123",
+        "email": "lucie123@example.com",
+        "password": "motdepasse123"
+    },
+    {
+        "nom": "Martin",
+        "prenom": "Jules",
+        "pseudo": "jules.martin",
+        "email": "jules.martin@example.com",
+        "password": "mdp456"
+    },
+    {
+        "nom": "Garcia",
+        "prenom": "Emma",
+        "pseudo": "emmagarcia",
+        "email": "emma.garcia@example.com",
+        "password": "pass789"
+    },
+    {
+        "nom": "Lefebvre",
+        "prenom": "Louis",
+        "pseudo": "louislefebvre",
+        "email": "louis.lefebvre@example.com",
+        "password": "azerty123"
+    },
+    {
+        "nom": "Petit",
+        "prenom": "Camille",
+        "pseudo": "camille.petit",
+        "email": "camille.petit@example.com",
+        "password": "12345678"
+    },
+    {
+        "nom": "Moreau",
+        "prenom": "Antoine",
+        "pseudo": "antoine.moreau",
+        "email": "antoine.moreau@example.com",
+        "password": "pass1234"
+    },
+    {
+        "nom": "Lecomte",
+        "prenom": "Julie",
+        "pseudo": "julielecomte",
+        "email": "julie.lecomte@example.com",
+        "password": "monmdp"
+    },
+    {
+        "nom": "Lemaire",
+        "prenom": "Hugo",
+        "pseudo": "hugolemaire",
+        "email": "hugo.lemaire@example.com",
+        "password": "mdp789"
+    },
+    {
+        "nom": "Dupuis",
+        "prenom": "Clara",
+        "pseudo": "claradupuis",
+        "email": "clara.dupuis@example.com",
+        "password": "mdp123"
+    },
+    {
+        "nom": "Simon",
+        "prenom": "Lucas",
+        "pseudo": "lucas.simon",
+        "email": "lucas.simon@example.com",
+        "password": "motdepasse456"
+    }
+]
