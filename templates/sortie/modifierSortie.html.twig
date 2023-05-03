@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
-{% block stylesheets %} <link rel="stylesheet" href="{{ asset('css/form.css') }}">{% endblock %}
+{% block stylesheets %} <link rel="stylesheet" href="{{ asset('css/modificationProfile.css') }}">{% endblock %}
 {% block title %}Modifier la sortie {{ sortie.nom }}{% endblock %}
 
 {% block body %}
 
-    <h1>Modifier la sortie "{{ sortie.nom }}"</h1>
+    <h1 class="titre_profil">Modification la sortie {{ sortie.nom }}</h1>
 
     {{ form_start(modifierSortieForm) }}
     {{ form_row(modifierSortieForm.nom) }}

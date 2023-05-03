@@ -4,12 +4,16 @@ namespace App\Controller;
 
 
 
+use App\Entity\Campus;
 use App\Entity\Participant;
+use App\Form\CampusType;
 use App\Form\UpdateProfileType;
 use App\Repository\ParticipantRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use League\Csv\Reader;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -88,4 +92,51 @@ class UtilisateurController extends AbstractController
             'modifierProfil' => $modifierProfilForm -> createView(),
         ]);
     }
+
+    #[Route('/utilisateur/inscription/csv', name: 'inscription_csv')]
+
+    public function inscriptionCsv(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createFormBuilder()
+            ->add('fichier', FileType::class)
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form->get('fichier')->getData();
+
+            if ($file) {
+                $csv = Reader::createFromPath($file->getPathname(), 'r');
+                $csv->setHeaderOffset(0);
+
+                foreach ($csv as $row) {
+                    $participant = new Participant();
+                    $participant->setNom($row['nom']);
+                    $participant->setPrenom($row['prenom']);
+                    $participant->setPseudo($row['pseudo']);
+                    $participant->setEmail($row['email']);
+                    $participant->setTelephone($row['telephone']);
+                    $participant->setPassword($passwordHasher->hashPassword($participant, $row['password']));
+                    $participant->setRoles([$row['role']]);
+                    $participant->setAdministrateur($row['administrateur']);
+                    $campus = $entityManager->getRepository(Campus::class)->findOneBy(['id' => $row['campus']]);
+                    $participant->setCampus($campus);
+                    $participant->setActif(true);
+                    $entityManager->persist($participant);
+                }
+
+            }
+
+                $entityManager->flush();
+
+                $this->addFlash('success', 'Utilisateurs ajoutés avec succès.');
+                return $this->redirectToRoute('app_utilisateur');
+            }
+
+        return $this->render('utilisateur/inscriptionCsv.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
 }
