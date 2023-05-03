@@ -68,11 +68,7 @@ class SortieRepository extends ServiceEntityRepository
 
     public function trouverAffichable(FiltreAccueil $filtre, ?Participant $participant) : array {
 
-        $query = $this->createQueryBuilder('s')
-            ->addSelect('a', 's', 'b')
-            ->leftJoin('s.participants', 'a')
-            ->leftJoin('s.organisateur', 'b')
-        ;
+        $query = $this->createQueryBuilder('s');
 
         if (!empty($filtre->campus)){
             $query = $query
@@ -102,15 +98,15 @@ class SortieRepository extends ServiceEntityRepository
                     ->setParameter('actuel', $participant);
             }
             if (!$filtre->inscrit) {
+
                 $query = $query
-                    ->andWhere('a NOT IN (:participe)')
-                    ->setParameter('participe', $participant);
+                    ->leftJoin('s.participants', 'participants')
+                    ->andWhere('participants.id LIKE :id')
+                    ->setParameter('id', $participant->getId());
             }
 
             if (!$filtre->nonInscrit) {
-                $query = $query
-                    ->andWhere('a IN (:user)')
-                    ->setParameter('user', $participant);
+                // à toi de jouer
             }
         }
         if ($filtre->passe){
