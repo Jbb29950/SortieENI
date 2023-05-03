@@ -178,6 +178,7 @@ class AppFixtures extends Fixture
         $balade->setEtat($enCreation);
         $datet->setDate(2023, 5, 15);
         $balade->setDateLimiteInscription($datet);
+        $balade->setCampus($campus1);
         $balade->setNbInscriptionsMax(10);
         $balade->setInfosSortie('Il va faire chaud préparez de l\'eau');
         $manager->persist($balade);
@@ -192,6 +193,7 @@ class AppFixtures extends Fixture
         $picole->setDateHeureDebut($datet);
         $picole->setLieu($barherb);
         $picole->setEtat($ouvert);
+        $picole->setCampus($campus2);
         $datet->setDate(2023, 6, 15);
         $picole->setDateLimiteInscription($datet);
         $picole->setNbInscriptionsMax(200);
