@@ -43,7 +43,9 @@ class UpdateProfileType extends AbstractType
             ->add('password', RepeatedType::class,[
                 'type'=>PasswordType::class,
                 'mapped'=>false,
-                'required'=>false])
+                'required'=>false,
+                'first_options'=>['label'=>'Nouveau mot de passe'],
+                'second_options'=>['label' => 'Répéter mot de Pass']])
             #->add('administrateur')
             #->add('actif')
 
