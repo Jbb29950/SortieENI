@@ -101,12 +101,18 @@ class SortieRepository extends ServiceEntityRepository
 
                 $query = $query
                     ->leftJoin('s.participants', 'participants')
-                    ->andWhere('participants.id LIKE :id')
+                    ->andWhere('participants.id NOT LIKE :id')
                     ->setParameter('id', $participant->getId());
             }
 
             if (!$filtre->nonInscrit) {
-                // à toi de jouer
+                if($filtre->inscrit){
+                    $query = $query
+                    ->leftJoin('s.participants', 'participants');
+                }
+                $query = $query
+                ->andWhere('participants.id LIKE :id')
+                ->setParameter('id', $participant->getId());
             }
         }
         if ($filtre->passe){
