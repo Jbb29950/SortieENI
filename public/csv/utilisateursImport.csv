@@ -1,72 +1,11 @@
-[
-    {
-        "nom": "Dubois",
-        "prenom": "Lucie",
-        "pseudo": "lucie123",
-        "email": "lucie123@example.com",
-        "password": "motdepasse123"
-    },
-    {
-        "nom": "Martin",
-        "prenom": "Jules",
-        "pseudo": "jules.martin",
-        "email": "jules.martin@example.com",
-        "password": "mdp456"
-    },
-    {
-        "nom": "Garcia",
-        "prenom": "Emma",
-        "pseudo": "emmagarcia",
-        "email": "emma.garcia@example.com",
-        "password": "pass789"
-    },
-    {
-        "nom": "Lefebvre",
-        "prenom": "Louis",
-        "pseudo": "louislefebvre",
-        "email": "louis.lefebvre@example.com",
-        "password": "azerty123"
-    },
-    {
-        "nom": "Petit",
-        "prenom": "Camille",
-        "pseudo": "camille.petit",
-        "email": "camille.petit@example.com",
-        "password": "12345678"
-    },
-    {
-        "nom": "Moreau",
-        "prenom": "Antoine",
-        "pseudo": "antoine.moreau",
-        "email": "antoine.moreau@example.com",
-        "password": "pass1234"
-    },
-    {
-        "nom": "Lecomte",
-        "prenom": "Julie",
-        "pseudo": "julielecomte",
-        "email": "julie.lecomte@example.com",
-        "password": "monmdp"
-    },
-    {
-        "nom": "Lemaire",
-        "prenom": "Hugo",
-        "pseudo": "hugolemaire",
-        "email": "hugo.lemaire@example.com",
-        "password": "mdp789"
-    },
-    {
-        "nom": "Dupuis",
-        "prenom": "Clara",
-        "pseudo": "claradupuis",
-        "email": "clara.dupuis@example.com",
-        "password": "mdp123"
-    },
-    {
-        "nom": "Simon",
-        "prenom": "Lucas",
-        "pseudo": "lucas.simon",
-        "email": "lucas.simon@example.com",
-        "password": "motdepasse456"
-    }
-]
+nom,prenom,pseudo,email,telephone,password,role,administrateur,campus
+Dubois,Lucie,lucie123,lucie123@example.com,0101010101,motdepasse123,ROLE_USER,false,1
+Martin,Jules,jules.martin,jules.martin@example.com,0202020202,mdp456,ROLE_USER,false,1
+Garcia,Emma,emmagarcia,emma.garcia@example.com,0101010102,pass789,ROLE_USER,false,1
+Lefebvre,Louis,louislefebvre,louis.lefebvre@example.com,0202020203,azerty123,ROLE_USER,false,1
+Petit,Camille,camille.petit,camille.petit@example.com,0101010103,12345678,ROLE_USER,false,1
+Moreau,Antoine,antoine.moreau,antoine.moreau@example.com,0202020204,pass1234,ROLE_USER,false,1
+Lecomte,Julie,julielecomte,julie.lecomte@example.com,0101010104,monmdp,ROLE_USER,false,1
+Lemaire,Hugo,hugolemaire,hugo.lemaire@example.com,0202020205,mdp789,ROLE_USER,false,1
+Dupuis,Clara,claradupuis,clara.dupuis@example.com,0101010105,mdp123,ROLE_USER,false,1
+Simon,Lucas,lucas.simon,lucas.simon@example.com,0202020206,motdepasse456,ROLE_USER,false,1
