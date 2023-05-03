@@ -40,10 +40,18 @@ class UpdateProfileType extends AbstractType
         ])
 
             #->add('sortie')
-            ->add('password', RepeatedType::class,[
+            ->add('password',RepeatedType::class,[
                 'type'=>PasswordType::class,
-                'mapped'=>false,
-                'required'=>false])
+                'invalid_message'=>"Les deux champs doivent être identiques.",
+                //'options'=>['attr'=>['class'=>'password-field']],
+                'required'=>false,
+
+                'first_options'=>['label'=>'Changer votre mot de passe'],
+                'second_options'=>['label'=>'Réécrivez votre nouveau mot de passe.']
+
+
+            ])
+        ;
             #->add('administrateur')
             #->add('actif')
 

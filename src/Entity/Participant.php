@@ -288,4 +288,16 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    #[ORM\Column(type:'string',length: 100)]
+    private $resetToken;
+    public function getResetToken(): ?string
+    {
+        return $this->resetToken;
+    }
+    public function setResetToken(?string $resetToken):self
+    {
+        $this->resetToken=$resetToken;
+        return $this;
+    }
 }
