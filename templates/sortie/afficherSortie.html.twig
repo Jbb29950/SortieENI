@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 
+
 {% block title %}{{ sortie.nom }}{% endblock %}
 
 {% block body %}
@@ -27,14 +28,12 @@
         {% if app.user and sortie.dateLimiteInscription > 'now' %}
             {% if app.user in sortie.participants %}
                 <form method="post" action="{{ path('sortie_desister', {'id': sortie.id}) }}">
-                    <div class="form-group">
-                        <label for="motif">Motif d'annulation :</label>
-                        <textarea class="form-control" id="motif" name="motif" rows="3"></textarea>
-                    </div>
                     <button type="submit" class="btn btn-danger">Se désister</button>
                 </form>
             {% else %}
-                <a href="{{ path('inscription_sortie', {'id': sortie.id}) }}" class="btn btn-success">S'inscrire</a>
+                {% if sortie.etat == 'Ouvert' %}
+                    <a href="{{ path('inscription_sortie', {'id': sortie.id}) }}" class="btn btn-success">S'inscrire</a>
+                {% endif %}
             {% endif %}
         {% endif %}
 

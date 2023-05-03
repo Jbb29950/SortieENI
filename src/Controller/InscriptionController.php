@@ -58,13 +58,6 @@ class InscriptionController extends AbstractController
             return $this->redirectToRoute('afficher_Sortie', ['id' => $sortie->getId()]);
         }
 
-        // Récupérer le motif d'annulation depuis le formulaire
-        $motif = $request->request->get('motif');
-        if (empty($motif)) {
-            $this->addFlash('error', 'Vous devez fournir un motif d\'annulation.');
-            return $this->redirectToRoute('afficher_Sortie', ['id' => $sortie->getId()]);
-        }
-
         // Vérifier que la date limite d'inscription n'est pas dépassée
         $dateLimiteInscription = $sortie->getDateLimiteInscription();
         if ($dateLimiteInscription !== null && $dateLimiteInscription <= $now) {
