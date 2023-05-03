@@ -27,19 +27,21 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $user->setAdministrateur(false);
             $user->setActif(true);
 
 
             $user->setCampus($campusRepo->findOneBy(['nom' => $request->request->get('campus')]));
 
-            $user->setPassword(
-                $userPasswordHasher->hashPassword(
-                    $user,
-                    $form->get('plainPassword')->getData(),
+
+                $user -> setPassword(
+                    $userPasswordHasher -> hashPassword(
+                        $user,
+                        $user->getPassword()));
 
 
-            $entityManager->persist($user)));
+            $entityManager->persist($user);
             $entityManager->flush();
             return $userAuthenticator->authenticateUser(
                 $user,
