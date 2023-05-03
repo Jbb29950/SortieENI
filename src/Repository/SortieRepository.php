@@ -2,9 +2,13 @@
 
 namespace App\Repository;
 
+use App\Entity\Participant;
 use App\Entity\Sortie;
+use App\Filtre\FiltreAccueil;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @extends ServiceEntityRepository<Sortie>
@@ -45,7 +49,7 @@ class SortieRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('s')
         ->andWhere('s.dateHeureDebut >= :date')
             ->setParameter('date', $date)
-        ->andWhere('s.etat != 5');
+        ->andWhere('s.etat.libelle != Archivé');
 
         return $qb->getQuery()->getResult();
     }
@@ -55,18 +59,70 @@ class SortieRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('s')
             ->andWhere('s.dateHeureDebut > :date')
             ->setParameter('date', $date)
-            ->andWhere('s.etat != 5');
+            ->andWhere('s.etat.libelle != Archivé');
 
         $query = $qb->getQuery();
         return $query->execute();
     }
 
-    public function trouverAffichable() : array {
+    public function trouverAffichable(FiltreAccueil $filtre, ?Participant $participant) : array {
 
-        $qb = $this->createQueryBuilder('s')
-            ->andWhere('s.etat != 5');
+        $query = $this->createQueryBuilder('s');
 
-        return $qb->getQuery()->execute();
+        if (!empty($filtre->campus)){
+            $query = $query
+                ->andWhere('s.campus = :campus')
+                ->setParameter('campus', $filtre->campus);
+        }
+
+        if (!empty($filtre->contient)){
+            $query = $query
+                ->andWhere('s.nom LIKE :contient')
+                ->setParameter('contient', "%{$filtre->contient}%");
+        }
+        if (!empty($filtre->debutInterval)){
+            $query = $query
+                ->andWhere('s.dateHeureDebut > :debut')
+                ->setParameter('debut', $filtre->debutInterval);
+        }
+        if (!empty($filtre->finInterval)){
+            $query = $query
+                ->andWhere('s.dateHeureDebut < :fin')
+                ->setParameter('fin', $filtre->finInterval);
+        }
+        if(!is_null($participant)) {
+            if (!$filtre->organisateur) {
+                $query = $query
+                    ->andWhere('s.organisateur != :actuel')
+                    ->setParameter('actuel', $participant);
+            }
+            if (!$filtre->inscrit) {
+
+                $query = $query
+                    ->leftJoin('s.participants', 'participants')
+                    ->andWhere('participants.id NOT IN (:id)')
+                    ->setParameter('id', $participant->getId());
+            }
+
+            if (!$filtre->nonInscrit) {
+                if($filtre->inscrit){
+                    $query = $query
+                    ->leftJoin('s.participants', 'participants');
+                }
+                $query = $query
+                ->andWhere('participants.id LIKE :id')
+                ->setParameter('id', $participant->getId());
+            }
+        }
+        if ($filtre->passe){
+            $query = $query
+                ->andWhere('s.dateHeureDebut < :now')
+                ->setParameter('now', new \DateTime());
+        }
+
+        $requete = $query->getQuery();
+
+        return $requete->execute();
     }
 
 

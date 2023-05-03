@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Participant;
 use App\Entity\Sortie;
+use App\Filtre\FiltreAccueil;
 use App\Form\AnnulerSortieType;
 use App\Form\CreerSortieType;
+use App\Form\FiltreAccueilType;
 use App\Repository\EtatRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
@@ -21,6 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SortieController extends AbstractController
 {
+
     #[Route('/sortie/creer', name: 'creer_Sortie')]
     public function creerSortie(Request $request, EntityManagerInterface $entityManager, ParticipantRepository $participantRepository): Response
     {
@@ -154,7 +157,20 @@ class SortieController extends AbstractController
             'sortie' => $sortie,
         ]);
     }
-
+    #[Route('/', name: 'app_home')]
+    public function index(Request $request, SortieRepository $sortieRepository): Response
+    {
+        $filtre = new FiltreAccueil();
+        $form = $this->createForm(FiltreAccueilType::class, $filtre);
+        $form->handleRequest($request);
+        $participant = $this->getUser();
+        $affichables = $sortieRepository->trouverAffichable($filtre, $participant);
+        return $this->render('home/home.html.twig', [
+            'controller_name' => 'HomeController',
+            'form'=> $form->createView(),
+            'affichables'=>$affichables
+        ]);
+    }
 
 
 }
