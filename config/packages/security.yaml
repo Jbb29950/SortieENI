@@ -16,10 +16,12 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-
+            form_login:
+                login_path: app_login
+                check_path: app_login
             lazy: true
             provider: app_user_provider
-            custom_authenticator: App\Security\ParticipantAuthenticator
+            #custom_authenticator: App\Security\ParticipantAuthenticator
             logout:
                path: app_logout
                 # where to redirect after logout
