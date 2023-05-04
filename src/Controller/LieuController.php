@@ -56,31 +56,43 @@ class LieuController extends AbstractController
         ]);
     }
 
-    #[Route('/modifierLieu', name: ' modifier_lieu')]
+    #[Route('/modifierLieu', name: 'modifier_lieu')]
     public function modifierLieu(EntityManagerInterface $entityManager,LieuRepository $repo,Request $request, VilleRepository $vr): Response
     {
-        if(!$this->isGranted('ROLE_ADMIN')){
-            $this->addFlash('fail', 'Vous n\'avez pas la permission petit coquins');
-            return $this->render('home/home.html.twig', [
-                'controller_name' => 'LieuController',]);
-        }
+
         $lieu = new Lieu();
         $creerLieuForm = $this->createForm(LieuType::class,$lieu);
         $creerLieuForm->handleRequest($request);
 
         if ($creerLieuForm->isSubmitted()&&$creerLieuForm->isValid()){
-            $lieu->setVille($vr->findOneBy(['id'=> $request->request->get('ville')]));
+            //$lieu->setVille($vr->findOneBy(['id'=> $request->request->get('ville')]));
             $entityManager->persist($lieu);
             $entityManager->flush();
             $this->addFlash('succes', 'Le lieu a été créé avec succés');
         }
         $lieux = $repo->findAll();
-        $villes = $vr->findAll();
+        //$villes = $vr->findAll();
 
         return $this->render('lieux/gestionlieux.html.twig', [
             'controller_name' => 'LieuController',
-            'villes' => $villes,
+            'lieux' => $lieux,
+            //'villes'=>$villes,
             'form'=>$creerLieuForm->createView()
         ]);
     }
-}
+} //$ville = new Ville();
+   // $creerVilleForm = $this->createForm(VilleFormType::class, $ville);
+    //$creerVilleForm->handleRequest($request);
+
+   // if ($creerVilleForm->isSubmitted()&&$creerVilleForm->isValid()){
+    //    $entityManager->persist($ville);
+   //     $entityManager->flush();
+    //    $this->addFlash('succes', 'La ville a été créé avec succés');
+   // }
+   // $villes = $vr->findAll();
+
+    //return $this->render('ville/gestionville.html.twig', [
+    //    'controller_name' => 'LieuController',
+    //    'villes' => $villes,
+    //    'form'=>$creerVilleForm->createView()
+   // ]);
