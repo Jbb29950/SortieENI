@@ -68,7 +68,7 @@ form button[type="submit"] {
 form button[type="submit"]:hover {
     background-color: #218838; /* couleur de fond au survol */
 }
-a{
+#modif-password{
     margin-bottom: 20px;
     font-size: 15px;
     border: 1px solid blue;
@@ -79,7 +79,7 @@ a{
 
 
 }
-a:hover{
+#modif-password:hover{
     color: white;
     background-color: red;
     width: 50%;
