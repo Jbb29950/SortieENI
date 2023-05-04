@@ -158,7 +158,7 @@ class SortieController extends AbstractController
             'sortie' => $sortie,
         ]);
     }
-    #[Route('/', name: 'app_home')]
+    #[Route('/accueil', name: 'app_home')]
     public function index(Request $request, SortieRepository $sortieRepository, EtatRepository $etatRepository, EntityManagerInterface $entityManager): Response
     {
         $filtre = new FiltreAccueil();
