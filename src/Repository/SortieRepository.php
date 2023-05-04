@@ -67,7 +67,11 @@ class SortieRepository extends ServiceEntityRepository
 
     public function trouverAffichable(FiltreAccueil $filtre, ?Participant $participant) : array {
 
-        $query = $this->createQueryBuilder('s');
+        $date= new \DateTime();
+        $date->modify('-1month');
+        $query = $this->createQueryBuilder('s')
+                ->andWhere('s.dateHeureDebut > :date')
+                ->setParameter(':date', $date);
 
         if (!empty($filtre->campus)){
             $query = $query
