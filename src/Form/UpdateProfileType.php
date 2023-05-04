@@ -23,41 +23,42 @@ class UpdateProfileType extends AbstractType
             ->add('prenom')
             ->add('telephone')
             ->add('pseudo')
+            ->add('email')
             ->add('photo_profil',FileType::class,[
                 'label'=>'Ajouter votre photo',
                 'mapped'=>false,
                 'required'=>false,
                 'constraints'=>[
                     new File(['maxSize'=>'2048k',
-                      #  'mimeTypes' =>[
-                      #      'application/jpeg',
-                      #      'application/jpg'
+                        #  'mimeTypes' =>[
+                        #      'application/jpeg',
+                        #      'application/jpg'
 
-                      #  ],
-                      #  'mimeTypesMessage'=>'Veuillez insérer un format valide',
+                        #  ],
+                        #  'mimeTypesMessage'=>'Veuillez insérer un format valide',
                     ])
                 ],
-        ])
+            ])
 
             #->add('sortie')
-           # ->add('password',RepeatedType::class,[
-             #   'type'=>PasswordType::class,
-             #   'invalid_message'=>"Les deux champs doivent être identiques.",
-                //'options'=>['attr'=>['class'=>'password-field']],
-             #   'required'=>false,
+            # ->add('password',RepeatedType::class,[
+            #   'type'=>PasswordType::class,
+            #   'invalid_message'=>"Les deux champs doivent être identiques.",
+            //'options'=>['attr'=>['class'=>'password-field']],
+            #   'required'=>false,
 
-              #  'first_options'=>['label'=>'Changer votre mot de passe'],
+            #  'first_options'=>['label'=>'Changer votre mot de passe'],
 
-              #  'second_options'=>['label'=>'Réécrivez votre nouveau mot de passe.'],
+            #  'second_options'=>['label'=>'Réécrivez votre nouveau mot de passe.'],
 
 
 
-           # ])
+            # ])
         ;
-            #->add('administrateur')
-            #->add('actif')
+        #->add('administrateur')
+        #->add('actif')
 
-            #->add('campus')
+        #->add('campus')
 
         ;
     }
