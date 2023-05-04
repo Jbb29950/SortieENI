@@ -29,6 +29,7 @@
             {{ form_row(creerSortieForm.etat) }}
         {% endif %}
         {{ form_row(creerSortieForm.lieu) }}
+        <a href="{{ path('app_lieu_modifier_lieu') }}">Ajouter un lieu</a>
         {{ form_row((creerSortieForm.campus)) }}
     </div>
 

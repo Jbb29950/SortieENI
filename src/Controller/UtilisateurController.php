@@ -12,6 +12,7 @@ use App\Repository\ParticipantRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Csv\Reader;
 
+use phpDocumentor\Reflection\Types\Nullable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -42,17 +43,20 @@ class UtilisateurController extends AbstractController
 
 
         $user = $this -> getUser();
+
         $modifierProfilForm = $this -> createForm(UpdateProfileType::class, $user);
         $modifierProfilForm -> handleRequest($request);
 
         if ($modifierProfilForm -> isSubmitted() && $modifierProfilForm -> isValid()) {
             $pseudo = $user -> getPseudo();
-            // $plainpassword = $modifierProfilForm->get('password')->getData();
-            //$mdp = $passwordHasher->hashPassword($user,$plainpassword);
+
             assert($user instanceof Participant);
-            //$user->setPassword($mdp);
+
             $photoFile = $modifierProfilForm ->get('photo_profil') -> getData();
 
+            $plainpassword = $modifierProfilForm->get('password')->getData();
+            $mdp = $passwordHasher->hashPassword($user,$plainpassword);
+            $user->setPassword($mdp);
             if($photoFile) {
 
                 $originalFileName = pathinfo($photoFile->getClientOriginalName(),PATHINFO_FILENAME);
