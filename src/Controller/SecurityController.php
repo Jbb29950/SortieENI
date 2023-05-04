@@ -126,5 +126,13 @@ public function reinitialisationMdp(
         $this->addFlash('danger','Un problème est survenu');
         return $this->redirectToRoute('app_login');
     }
-
+    #[Route('/', name:'home')]
+    public function home(): RedirectResponse
+    {
+        if($this->isGranted('IS_AUTHENTICATED_FULLY')){
+            return $this->redirectToRoute('app_home');
+        }else{
+            return $this->redirectToRoute('app_login');
+        }
+    }
 }
