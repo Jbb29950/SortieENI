@@ -166,15 +166,15 @@ class SortieController extends AbstractController
         $form->handleRequest($request);
         $participant = $this->getUser();
         $affichables = $sortieRepository->trouverAffichable($filtre, $participant);
-
         if(!$filtre->inscrit){
             $index = 0;
             foreach ($affichables as $sortie) {
                 assert($sortie instanceof Sortie);
-                if($sortie->getParticipants()->contains($participant)){
+                $dumpable = $sortie->getParticipants()->getValues();
+                if(in_array($participant, $sortie->getParticipants()->getValues())){
                     unset($affichables[$index]);
                 }
-            $index =+1;
+            $index = $index + 1;
             }
         }
 
