@@ -47,7 +47,7 @@ class UtilisateurController extends AbstractController
 
         if ($modifierProfilForm -> isSubmitted() && $modifierProfilForm -> isValid()) {
             $pseudo = $user -> getPseudo();
-           // $plainpassword = $modifierProfilForm->get('password')->getData();
+            // $plainpassword = $modifierProfilForm->get('password')->getData();
             //$mdp = $passwordHasher->hashPassword($user,$plainpassword);
             assert($user instanceof Participant);
             //$user->setPassword($mdp);
@@ -128,11 +128,11 @@ class UtilisateurController extends AbstractController
 
             }
 
-                $entityManager->flush();
+            $entityManager->flush();
 
-                $this->addFlash('success', 'Utilisateurs ajoutés avec succès.');
-                return $this->redirectToRoute('app_utilisateur');
-            }
+            $this->addFlash('success', 'Utilisateurs ajoutés avec succès.');
+            return $this->redirectToRoute('app_utilisateur');
+        }
 
         return $this->render('utilisateur/inscriptionCsv.html.twig', [
             'form' => $form->createView(),

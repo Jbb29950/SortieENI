@@ -6,11 +6,11 @@
 
     <div class="example-wrapper">
         {% if is_granted('ROLE_USER') %}
-        <h1>Bienvenue {{ app.user.prenom}} <br>
-            sur les sorties de l'ENI!</h1>
+            <h1>Bienvenue {{ app.user.prenom}} <br>
+                sur les sorties de l'ENI!</h1>
         {% else %}
             <h1>Bienvenue sur les sorties ENI !</h1>
-    {% endif %}
+        {% endif %}
     </div>
     <body>
     <section class="formulaire_tri">
@@ -42,7 +42,7 @@
     <section class="affichable">
         <table>
             <thead>
-                <tr>
+            <tr>
                 <th scope="col">Nom de la sortie</th>
                 <th scope="col">Date de la sortie</th>
                 <th scope="col">Clôture</th>
@@ -51,7 +51,7 @@
                 <th scope="col">Inscrit</th>
                 <th scope="col">Organisateur</th>
                 <th scope="col">Actions</th>
-                </tr>
+            </tr>
             </thead>
             <tbody>
             {% for sortie in affichables %}
