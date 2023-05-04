@@ -96,27 +96,21 @@ class SortieRepository extends ServiceEntityRepository
                     ->andWhere('s.organisateur != :actuel')
                     ->setParameter('actuel', $participant);
             }
-            if (!$filtre->inscrit) {
-
+            if (!$filtre->inscrit && $filtre->nonInscrit) {
                 $query = $query
-                    ->leftJoin('s.participants', 'participants')
-                    ->andWhere('participants.id NOT IN (:id)')
-                    ->setParameter('id', $participant->getId());
+                    ->leftJoin('s.participants', 'participants');
             }
 
             if (!$filtre->nonInscrit) {
-                if($filtre->inscrit){
-                    $query = $query
-                    ->leftJoin('s.participants', 'participants');
-                }
                 $query = $query
-                ->andWhere('participants.id LIKE :id')
-                ->setParameter('id', $participant->getId());
+                    ->leftJoin('s.participants', 'participants')
+                    ->andWhere('participants.id LIKE :id')
+                    ->setParameter('id', $participant->getId());
             }
         }
-        if ($filtre->passe){
+        if (!$filtre->passe){
             $query = $query
-                ->andWhere('s.dateHeureDebut < :now')
+                ->andWhere('s.dateHeureDebut > :now')
                 ->setParameter('now', new \DateTime());
         }
 
