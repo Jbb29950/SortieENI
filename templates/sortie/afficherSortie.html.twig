@@ -1,6 +1,5 @@
 {% extends 'base.html.twig' %}
 
-
 {% block title %}{{ sortie.nom }}{% endblock %}
 
 {% block body %}
@@ -21,7 +20,7 @@
         <h2>Participants ({{ sortie.participants|length }})</h2>
         <ul>
             {% for participant in sortie.participants %}
-                <li>{{ participant.nom }} {{ participant.prenom }}</li>
+                <li> <a href="{{ path('app_utilisateur', {'id' : participant.id}) }}">{{ participant.nom }} {{ participant.prenom }}</a></li>
             {% endfor %}
         </ul>
 
