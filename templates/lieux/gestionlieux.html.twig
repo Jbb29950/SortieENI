@@ -1,4 +1,4 @@
-extends 'base.html.twig' %}
+{% extends 'base.html.twig' %}
 {% block title %}Gestion Ville{% endblock %}
 {% block stylesheets %}
 
@@ -21,28 +21,36 @@ extends 'base.html.twig' %}
         <thead>
         <tr>
             <th scope="col">Lieu</th>
-            <th scope="col" class="col_2">Nom</th>
-            <th scope="col">Rue</th>
+            <th scope="col" class="col_2">Rue</th>
             <th scope="col">Latitude</th>
             <th scope="col">Longitude</th>
+            <th scope="col">Code postal</th>
             <th scope="col">Ville</th>
         </tr>
         </thead>
         <tbody>
-        {% for ville in villes %}
+        {% for lieu in lieux %}
             <tr>
-                <td>{{ ville.nom }}</td>
-                <td class="col_2">{{ ville.codePostal }}</td>
+                <td class="col">{{ lieu.nom }}</td>
+                <td class="col">{{ lieu.rue }}</td>
+                <td class="col">{{ lieu.latitude }}</td>
+                <td class="col">{{ lieu.longitude }}</td>
+                <td class="col">{{ lieu.ville.codePostal }}</td>
+                <td class="col">{{ lieu.ville.nom }}</td>
                 <td>
-                    <!--<button class="btn btn-link">Modifier</button>-->
-                    <a class="btn btn-link" href="{{ path('app_lieu_supprimer_ville', {'id': ville.id})}}">Supprimer</a>
+                    <button class="btn btn-link">Modifier</button>
                 </td>
             </tr>
         {% endfor %}
         {{ form_start(form) }}
         <tr>
-            <td>{{ form_row(form.nom) }}</td>
-            <td class="col_2">{{ form_row((form.codePostal)) }}</td>
+            <td class="col">{{ form_row(form.nom) }}</td>
+            <td class="col">{{ form_row((form.rue)) }}</td>
+            <td class="col">{{ form_row((form.latitude)) }}</td>
+            <td class="col">{{ form_row((form.longitude)) }}</td>
+            <td></td>
+            <td class="col">{{ form_row((form.ville)) }}</td>
+
             <td><button type="submit" class="btn btn-link">Ajouter</button></td>
         </tr>
         {{ form_end(form) }}
