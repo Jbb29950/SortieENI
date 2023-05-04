@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-
+{% block stylesheets %} <link rel="stylesheet" href="{{ asset('css/sortie.css') }}">{% endblock %}
 {% block title %}Désister de la sortie "{{ sortie.titre }}"{% endblock %}
 
 {% block body %}
