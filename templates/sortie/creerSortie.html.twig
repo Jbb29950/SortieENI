@@ -13,26 +13,26 @@
     <h1>Créer une sortie </h1>
 
     <div class="formulaire_creation">
-    {{ form_start(creerSortieForm) }}
-    {{ form_row(creerSortieForm.nom) }}
-    {{ form_row(creerSortieForm.dateHeureDebut) }}
-    {{ form_row(creerSortieForm.duree) }}
-    {{ form_row(creerSortieForm.dateLimiteInscription) }}
-    {{ form_row(creerSortieForm.nbInscriptionsMax) }}
-    {{ form_row(creerSortieForm.infosSortie) }}
+        {{ form_start(creerSortieForm) }}
+        {{ form_row(creerSortieForm.nom) }}
+        {{ form_row(creerSortieForm.dateHeureDebut) }}
+        {{ form_row(creerSortieForm.duree) }}
+        {{ form_row(creerSortieForm.dateLimiteInscription) }}
+        {{ form_row(creerSortieForm.nbInscriptionsMax) }}
+        {{ form_row(creerSortieForm.infosSortie) }}
         {% if etat is defined %}
             {{ form_row(creerSortieForm.etat, {'choices': { 'ouvert': 'Ouvert', 'en_creation': 'En création'}}) }}
         {% else %}
             {{ form_row(creerSortieForm.etat) }}
         {% endif %}
-    {{ form_row(creerSortieForm.lieu) }}
-    {{ form_row((creerSortieForm.campus)) }}
+        {{ form_row(creerSortieForm.lieu) }}
+        {{ form_row((creerSortieForm.campus)) }}
     </div>
 
     <div class="bouton_valider">
 
-    <button type="submit" class="btn">Publier la sortie</button>
-    <button type="submit" class="btn">Annuler</button>
+        <button type="submit" class="btn">Publier la sortie</button>
+        <button type="submit" class="btn">Annuler</button>
     </div>
 
 

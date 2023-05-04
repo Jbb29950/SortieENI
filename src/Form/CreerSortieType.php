@@ -31,7 +31,7 @@ class CreerSortieType extends AbstractType
             ])
             ->add('dateLimiteInscription', DateType::class,[
                 'widget' => 'single_text',
-                ])
+            ])
             ->add('nbInscriptionsMax')
             ->add('infosSortie')
             ->add('lieu', EntityType::class,[
@@ -42,9 +42,9 @@ class CreerSortieType extends AbstractType
                 'class'=>Etat::class,
                 'choice_label'=>'libelle',
                 'query_builder'=> function(EntityRepository $er){
-                return $er->createQueryBuilder('e')
-                    ->andWhere('e.libelle IN (:libelles)')
-                    ->setParameter('libelles', ['ouvert', 'en création']);
+                    return $er->createQueryBuilder('e')
+                        ->andWhere('e.libelle IN (:libelles)')
+                        ->setParameter('libelles', ['ouvert', 'en création']);
                 },
             ])
             ->add('campus', EntityType::class,[
