@@ -39,16 +39,18 @@ class UtilisateurController extends AbstractController
                                    SluggerInterface $slugger,
                                    ParticipantRepository $participantRepository,
                                    UserPasswordHasherInterface $passwordHasher): Response{
+
+
         $user = $this -> getUser();
         $modifierProfilForm = $this -> createForm(UpdateProfileType::class, $user);
         $modifierProfilForm -> handleRequest($request);
 
         if ($modifierProfilForm -> isSubmitted() && $modifierProfilForm -> isValid()) {
             $pseudo = $user -> getPseudo();
-            $plainpassword = $modifierProfilForm->get('password')->getData();
-            $mdp = $passwordHasher->hashPassword($user,$plainpassword);
+           // $plainpassword = $modifierProfilForm->get('password')->getData();
+            //$mdp = $passwordHasher->hashPassword($user,$plainpassword);
             assert($user instanceof Participant);
-            $user->setPassword($mdp);
+            //$user->setPassword($mdp);
             $photoFile = $modifierProfilForm ->get('photo_profil') -> getData();
 
             if($photoFile) {
@@ -60,14 +62,12 @@ class UtilisateurController extends AbstractController
                     $photoFile -> move(
                         $this -> getParameter('photo_dir'),
                         $newFileName
-
                     );
                 }
                 catch (FileException $e){
 
                 }$user->setPhotoProfil($newFileName);
             }
-
             if ($this->getUser()->getPseudo =! $pseudo) {
 
                 if ($participantRepository -> findOneBy(['pseudo' => $pseudo])) {
@@ -83,7 +83,7 @@ class UtilisateurController extends AbstractController
             $entityManager -> flush();
 
             $this -> addFlash('success', 'Profil modifié avec succès.');
-            dump($user);
+
             return $this -> redirectToRoute('app_utilisateur');
         }
 
