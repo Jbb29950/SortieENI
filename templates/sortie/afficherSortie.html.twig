@@ -24,7 +24,7 @@
             {% endfor %}
         </ul>
 
-        {% if app.user and sortie.dateLimiteInscription > 'now' %}
+        {% if app.user and sortie.dateLimiteInscription > 'now' and sortie.dateHeureDebut > 'now' %}
             {% if app.user in sortie.participants %}
                 <form method="post" action="{{ path('sortie_desister', {'id': sortie.id}) }}">
                     <button type="submit" class="btn btn-danger">Se désister</button>
@@ -32,6 +32,8 @@
             {% else %}
                 {% if sortie.etat == 'Ouvert' %}
                     <a href="{{ path('inscription_sortie', {'id': sortie.id}) }}" class="btn btn-success">S'inscrire</a>
+                    {% else %}
+                    <p>Les inscriptions à cette sortie sont fermées.</p>
                 {% endif %}
             {% endif %}
         {% endif %}

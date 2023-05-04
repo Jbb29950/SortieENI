@@ -6,11 +6,11 @@
 
     <div class="example-wrapper">
         {% if is_granted('ROLE_USER') %}
-        <h1>Bienvenue {{ app.user.prenom}} <br>
-            sur les sorties de l'ENI!</h1>
+            <h1>Bienvenue {{ app.user.prenom}} <br>
+                sur les sorties de l'ENI!</h1>
         {% else %}
             <h1>Bienvenue sur les sorties ENI !</h1>
-    {% endif %}
+        {% endif %}
     </div>
     <body>
     <section class="formulaire_tri">
@@ -42,7 +42,7 @@
     <section class="affichable">
         <table>
             <thead>
-                <tr>
+            <tr>
                 <th scope="col">Nom de la sortie</th>
                 <th scope="col">Date de la sortie</th>
                 <th scope="col">Clôture</th>
@@ -51,7 +51,7 @@
                 <th scope="col">Inscrit</th>
                 <th scope="col">Organisateur</th>
                 <th scope="col">Actions</th>
-                </tr>
+            </tr>
             </thead>
             <tbody>
             {% for sortie in affichables %}
@@ -66,13 +66,10 @@
                     <td>
                         <a href="{{ path('afficher_Sortie',{'id':sortie.id}) }}">Afficher</a>
                         {% if sortie.getParticipants().contains(app.user) %}<a href="{{ path('sortie_desister',{'id':sortie.id}) }}">Se désister</a>{% endif %}
-                        {% if sortie.getParticipants().contains(app.user) %}<a href="{{ path('supprimer_Sortie',{'id':sortie.id}) }}">Annuler la sortie</a>{% endif %}
+                        {% if sortie.getOrganisateur == app.user or is_granted('ROLE_ADMIN') %}<a href="{{ path('supprimer_Sortie',{'id':sortie.id}) }}">Annuler la sortie</a>{% endif %}
                         {% if sortie.getOrganisateur == app.user%}<a href="{{ path('modifier_Sortie',{'id':sortie.id}) }}">Modifier</a>{% endif %}
                         {% if not sortie.getParticipants().contains(app.user) and sortie.getEtat.getLibelle == 'Ouvert' %}<a href="{{ path('inscription_sortie', {'id':sortie.id}) }}">S'inscrire</a>{% endif %}
-                        {% if is_granted('ROLE_ADMIN') %}
-                            <a href="{{ path('supprimer_Sortie', {'id':sortie.id}) }}">Supprimer une sortie</a>
-                        {% endif %}
-                    </td>
+                        </td>
                 </tr>
             {% endfor %}
             </tbody>

@@ -159,22 +159,28 @@ class SortieController extends AbstractController
         ]);
     }
     #[Route('/', name: 'app_home')]
-    public function index(Request $request, SortieRepository $sortieRepository): Response
+    public function index(Request $request, SortieRepository $sortieRepository, EtatRepository $etatRepository, EntityManagerInterface $entityManager): Response
     {
         $filtre = new FiltreAccueil();
         $form = $this->createForm(FiltreAccueilType::class, $filtre);
         $form->handleRequest($request);
         $participant = $this->getUser();
         $affichables = $sortieRepository->trouverAffichable($filtre, $participant);
-        if(!$filtre->inscrit){
-            $index = 0;
-            foreach ($affichables as $sortie) {
-                assert($sortie instanceof Sortie);
-                $dumpable = $sortie->getParticipants()->getValues();
+        $ferme = $etatRepository->findOneBy(['libelle'=>'Fermé']);
+
+        $index = 0;
+        foreach ($affichables as $sortie) {
+            assert($sortie instanceof Sortie);
+            if ($sortie->getDateLimiteInscription() < new \DateTime() && $sortie->getEtat()->getLibelle() != 'Fermé'){
+                $sortie->setEtat($ferme);
+                $entityManager->persist($sortie);
+                $entityManager->flush();
+            }
+            if(!$filtre->inscrit){
                 if(in_array($participant, $sortie->getParticipants()->getValues())){
                     unset($affichables[$index]);
                 }
-            $index = $index + 1;
+                $index = $index + 1;
             }
         }
 

@@ -7,6 +7,7 @@ use App\Entity\Etat;
 use App\Entity\Lieu;
 use App\Entity\Sortie;
 use Doctrine\DBAL\Types\Type;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -22,6 +23,7 @@ class CreerSortieType extends AbstractType
         $builder
             ->add('nom')
             ->add('dateHeureDebut',DateType::class,[
+                'label'=>'Date de la sortie',
                 'widget' => 'single_text',
             ])
             ->add('duree', TimeType::class, [
@@ -29,7 +31,7 @@ class CreerSortieType extends AbstractType
             ])
             ->add('dateLimiteInscription', DateType::class,[
                 'widget' => 'single_text',
-                ])
+            ])
             ->add('nbInscriptionsMax')
             ->add('infosSortie')
             ->add('lieu', EntityType::class,[
@@ -38,7 +40,12 @@ class CreerSortieType extends AbstractType
             ])
             ->add('etat', EntityType::class,[
                 'class'=>Etat::class,
-                'choice_label'=>'libelle'
+                'choice_label'=>'libelle',
+                'query_builder'=> function(EntityRepository $er){
+                    return $er->createQueryBuilder('e')
+                        ->andWhere('e.libelle IN (:libelles)')
+                        ->setParameter('libelles', ['ouvert', 'en création']);
+                },
             ])
             ->add('campus', EntityType::class,[
                 'class'=> Campus::class,
