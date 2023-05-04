@@ -44,7 +44,7 @@ security:
          - { path: ^/register, roles: ROLE_ADMIN }
          - { path: ^/admin, roles: ROLE_ADMIN }
          - { path: ^/sortie, roles: ROLE_USER }
-         - { path: ^/utilisateur, roles: ROLE_USER }
+         - { path: ^/accueil, roles: ROLE_USER }
 
 when@test:
     security:
