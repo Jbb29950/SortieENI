@@ -69,6 +69,7 @@ class SortieRepository extends ServiceEntityRepository
 
         $date= new \DateTime();
         $date->modify('-1month');
+
         $query = $this->createQueryBuilder('s')
                 ->andWhere('s.dateHeureDebut > :date')
                 ->setParameter(':date', $date);
