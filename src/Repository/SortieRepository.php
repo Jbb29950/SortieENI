@@ -100,14 +100,13 @@ class SortieRepository extends ServiceEntityRepository
                     ->andWhere('s.organisateur != :actuel')
                     ->setParameter('actuel', $participant);
             }
-            if (!$filtre->inscrit && $filtre->nonInscrit) {
+            if (!$filtre->inscrit || !$filtre->nonInscrit) {
                 $query = $query
                     ->leftJoin('s.participants', 'participants');
             }
 
             if (!$filtre->nonInscrit) {
                 $query = $query
-                    ->leftJoin('s.participants', 'participants')
                     ->andWhere('participants.id LIKE :id')
                     ->setParameter('id', $participant->getId());
             }
