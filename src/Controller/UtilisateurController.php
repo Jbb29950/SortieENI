@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Entity\Campus;
 use App\Entity\Participant;
+use App\Entity\Sortie;
 use App\Form\CampusType;
 use App\Form\UpdateProfileType;
 use App\Repository\ParticipantRepository;
@@ -138,6 +139,20 @@ class UtilisateurController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+    #[Route('/participant/{idParticipant}', name:'app_participant')]
+
+    public function afficherProfilParticipant($idParticipant, ParticipantRepository $participantRepository)
+    {
+        $user= $participantRepository->findOneBy(['id'=> $idParticipant]);
+        $user->setTelephone('00000000');
+        $user->setEmail('On n\'affiche pas le mail des gens');
+
+
+        return $this->render('utilisateur/afficherProfil.twig', [
+            'user'=> $user
+        ]);
+    }
+
 
     #[Route('/admin/participant', name: 'participant_gestion')]
     public function gestionPartcipant(ParticipantRepository $participantRepository){

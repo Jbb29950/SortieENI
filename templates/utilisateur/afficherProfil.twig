@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %} <link rel="stylesheet" href="{{ asset('css/profile.css') }}">{% endblock %}
+{% block title %}Profil{% endblock %}
+{% block body %}
+
+    <section class="container_profil">
+        {% if user %}
+            <h1 class="titre_profil">Profil de {{ user.nom }} {{ user.prenom }}</h1>
+            <div class="profil">
+                <h2> <img id="Photo-profil"  src="{{ asset('uploads/photos/' ~ user.photoProfil) }}"/></h2>
+                <h2>Nom : {{ user.nom }}</h2>
+                <h2>Prénom : {{ user.prenom }}</h2>
+                <h2>Campus : {{ user.campus.nom }}</h2>
+                {% if user.pseudo %}
+                    <h2>Pseudo : {{ user.pseudo }}</h2>
+                {% endif %}
+            </div>
+        {% endif %}
+    </section>
+
+{% endblock %}
