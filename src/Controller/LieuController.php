@@ -77,7 +77,7 @@ class LieuController extends AbstractController
         $lieux = $repo->findAll();
         $villes = $vr->findAll();
 
-        return $this->render('lieu/gestionlieu.html.twig', [
+        return $this->render('lieux/gestionlieux.html.twig', [
             'controller_name' => 'LieuController',
             'villes' => $villes,
             'form'=>$creerLieuForm->createView()
