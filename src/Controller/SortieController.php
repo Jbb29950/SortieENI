@@ -101,7 +101,7 @@ class SortieController extends AbstractController
     {
         $sortie = $sortieRepository->find($id);
 
-        if (is_null($sortie));
+        if (is_null($sortie))
         {
             $this->redirectToRoute('app_home');
         }
