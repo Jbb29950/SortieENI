@@ -24,10 +24,12 @@ input[type="email"],
 input[type="password"] {
     padding: 10px;
     border-radius: 5px;
-    border: none;
+
     background-color: #ffffff;
     margin-bottom: 20px;
     width: 100%;
+    border: 1px solid black;
+
 }
 
 input[type="email"]:focus,
@@ -49,9 +51,11 @@ input[type="password"]:focus {
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
+    margin-top: 20px;
 }
 
 .btn:hover {
     background-color: #0069d9;
 }
+
 
