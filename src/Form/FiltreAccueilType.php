@@ -19,7 +19,7 @@ class FiltreAccueilType extends AbstractType{
         $builder
             ->add('campus', EntityType::class,[
                 'choice_label' => 'nom',
-                'label' => false,
+                'label' => 'Campus',
                 'required' => false,
                 'class'=> Campus::class,
             ])

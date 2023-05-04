@@ -19,6 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function PHPUnit\Framework\isEmpty;
 
 
 class SortieController extends AbstractController
@@ -165,6 +166,18 @@ class SortieController extends AbstractController
         $form->handleRequest($request);
         $participant = $this->getUser();
         $affichables = $sortieRepository->trouverAffichable($filtre, $participant);
+
+        if(!$filtre->inscrit){
+            $index = 0;
+            foreach ($affichables as $sortie) {
+                assert($sortie instanceof Sortie);
+                if($sortie->getParticipants()->contains($participant)){
+                    unset($affichables[$index]);
+                }
+            $index =+1;
+            }
+        }
+
         return $this->render('home/home.html.twig', [
             'controller_name' => 'HomeController',
             'form'=> $form->createView(),

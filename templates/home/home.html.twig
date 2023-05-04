@@ -15,8 +15,27 @@
     <body>
     <section class="formulaire_tri">
         {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <button>Rechercher</button>
+        <table>
+            <tbody>
+            <tr>
+                <td>{{ form_row(form.campus) }}</td>
+                <td>{{ form_row(form.organisateur) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_row(form.contient) }}</td>
+                <td>{{ form_row(form.inscrit) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_row(form.debutInterval) }}</td>
+                <td>{{ form_row(form.nonInscrit) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_row(form.finInterval) }}</td>
+                <td>{{ form_row(form.passe) }}</td>
+                <td><button>Rechercher</button></td>
+            </tr>
+            </tbody>
+        </table>
         {{ form_end(form) }}
     </section>
 
