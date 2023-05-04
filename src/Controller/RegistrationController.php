@@ -22,6 +22,7 @@ class RegistrationController extends AbstractController
                              CampusRepository $campusRepo, EntityManagerInterface $entityManager): Response
     {
         $user = new Participant();
+
         $user->setRoles(["ROLE_USER"]);
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -32,22 +33,21 @@ class RegistrationController extends AbstractController
             $user->setActif(true);
 
 
-            $user->setCampus($campusRepo->findOneBy(['nom' => $request->request->get('campus')]));
 
 
-                $user -> setPassword(
+
+               $user -> setPassword(
                     $userPasswordHasher -> hashPassword(
-                        $user,
-                        $user->getPassword()));
+                           $user,
+                       $form->get('plainPassword')->getData()));
 
 
             $entityManager->persist($user);
             $entityManager->flush();
-            return $userAuthenticator->authenticateUser(
-                $user,
-                $authenticator,
-                $request
-            );
+
+            $this->addFlash('success', 'Utilisateur créé avec succès.');
+            return $this->redirectToRoute('app_home');
+
 
         }
 

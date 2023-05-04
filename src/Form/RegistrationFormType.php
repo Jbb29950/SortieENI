@@ -30,7 +30,10 @@ class RegistrationFormType extends AbstractType
             ->add('prenom')
             ->add('email')
             ->add('telephone',TelType::class)
-
+            ->add('campus',EntityType::class,[
+                'choice_label'=>'nom',
+                'class'=>Campus::class,
+            ])
 
 
 
@@ -40,7 +43,7 @@ class RegistrationFormType extends AbstractType
                 #    new IsTrue([
                  #       'message' => 'You should agree to our terms.',
                   #  ]),
-                #],
+            #],
             #])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
@@ -53,9 +56,11 @@ class RegistrationFormType extends AbstractType
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+                        'minMessage' => 'Votre mot de passe doit avoir au minimum{{ limit }} caractères',
                         // max length allowed by Symfony for security reasons
+
                         'max' => 15,
+                        'maxMessage'=>'Votre mot de passe ne doit pas dépasser {{ limit }} caractères',
                     ]),
                 ],
             ])
