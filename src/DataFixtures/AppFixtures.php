@@ -29,27 +29,6 @@ class AppFixtures extends Fixture
         //ALTER TABLE tablename AUTO_INCREMENT = 1
         $conn = $manager->getConnection();
 
-        $sql = 'ALTER TABLE ville AUTO_INCREMENT = 1';
-        $conn->prepare($sql)->executeQuery();
-
-        $sql = 'ALTER TABLE lieu AUTO_INCREMENT = 1';
-        $conn->prepare($sql)->executeQuery();
-
-        $sql = 'ALTER TABLE campus AUTO_INCREMENT = 1';
-        $conn->prepare($sql)->executeQuery();
-
-        $sql = 'ALTER TABLE etat AUTO_INCREMENT = 1';
-        $conn->prepare($sql)->executeQuery();
-
-        $sql = 'ALTER TABLE sortie AUTO_INCREMENT = 1';
-        $conn->prepare($sql)->executeQuery();
-
-        $sql = 'ALTER TABLE participant AUTO_INCREMENT = 1';
-        $conn->prepare($sql)->executeQuery();
-
-        $sql = 'ALTER TABLE participant_sortie AUTO_INCREMENT = 1';
-        $conn->prepare($sql)->executeQuery();
-
 
         //Création des états
         $enCreation = new Etat();
@@ -71,6 +50,10 @@ class AppFixtures extends Fixture
         $archiv = new Etat();
         $archiv->setLibelle('Archivé');
         $manager->persist($archiv);
+
+        $annul = new Etat();
+        $annul->setLibelle('Annulé');
+        $manager->persist($annul);
 
         //création de deux campus
         $campus1 = new Campus();
@@ -195,6 +178,7 @@ class AppFixtures extends Fixture
         $balade->setEtat($enCreation);
         $datet->setDate(2023, 5, 15);
         $balade->setDateLimiteInscription($datet);
+        $balade->setCampus($campus1);
         $balade->setNbInscriptionsMax(10);
         $balade->setInfosSortie('Il va faire chaud préparez de l\'eau');
         $manager->persist($balade);
@@ -209,6 +193,7 @@ class AppFixtures extends Fixture
         $picole->setDateHeureDebut($datet);
         $picole->setLieu($barherb);
         $picole->setEtat($ouvert);
+        $picole->setCampus($campus2);
         $datet->setDate(2023, 6, 15);
         $picole->setDateLimiteInscription($datet);
         $picole->setNbInscriptionsMax(200);

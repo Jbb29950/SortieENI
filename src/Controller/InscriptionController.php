@@ -19,7 +19,7 @@ class InscriptionController extends AbstractController
     public function inscriptionSortie(Request $request, Sortie $sortie, EntityManagerInterface $entityManager): Response
     {
         // Vérifier que la sortie est ouverte et que la date limite d'inscription n'est pas dépassée
-        if ($sortie->getEtat()->getId() != '2' || $sortie->getDateLimiteInscription() < new \DateTime()) {
+        if ($sortie->getEtat()->getLibelle() != 'Ouvert' || $sortie->getDateLimiteInscription() < new \DateTime()) {
             $this->addFlash('error', 'La date limite d\'inscription est dépassée ou la sortie est fermée.');
             return $this->redirectToRoute('afficher_Sortie', ['id' => $sortie->getId()]);
         }
@@ -58,13 +58,6 @@ class InscriptionController extends AbstractController
             return $this->redirectToRoute('afficher_Sortie', ['id' => $sortie->getId()]);
         }
 
-        // Récupérer le motif d'annulation depuis le formulaire
-        $motif = $request->request->get('motif');
-        if (empty($motif)) {
-            $this->addFlash('error', 'Vous devez fournir un motif d\'annulation.');
-            return $this->redirectToRoute('afficher_Sortie', ['id' => $sortie->getId()]);
-        }
-
         // Vérifier que la date limite d'inscription n'est pas dépassée
         $dateLimiteInscription = $sortie->getDateLimiteInscription();
         if ($dateLimiteInscription !== null && $dateLimiteInscription <= $now) {
@@ -79,8 +72,7 @@ class InscriptionController extends AbstractController
 
         // Désister l'utilisateur de la sortie
         $sortie->removeParticipant($participant);
-        $sortie->setMotifAnnulation($motif);
-        $sortie->setEtat($entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Fermé']));
+        $entityManager->persist($sortie);
         $entityManager->flush();
 
         $this->addFlash('success', 'Votre désistement a été enregistré.');

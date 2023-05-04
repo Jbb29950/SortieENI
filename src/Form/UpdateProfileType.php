@@ -5,6 +5,8 @@ namespace App\Form;
 use App\Entity\Participant;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
@@ -21,22 +23,42 @@ class UpdateProfileType extends AbstractType
             ->add('prenom')
             ->add('telephone')
             ->add('pseudo')
+            ->add('email')
             ->add('photo_profil',FileType::class,[
                 'label'=>'Ajouter votre photo',
                 'mapped'=>false,
                 'required'=>false,
                 'constraints'=>[
-                    new File(['maxSize'=>'2048k'
+                    new File(['maxSize'=>'2048k',
+                        #  'mimeTypes' =>[
+                        #      'application/jpeg',
+                        #      'application/jpg'
+
+                        #  ],
+                        #  'mimeTypesMessage'=>'Veuillez insérer un format valide',
                     ])
-                ]
-        ]       )
+                ],
+            ])
 
             #->add('sortie')
-            #->add('password')
-            #->add('administrateur')
-            #->add('actif')
+            # ->add('password',RepeatedType::class,[
+            #   'type'=>PasswordType::class,
+            #   'invalid_message'=>"Les deux champs doivent être identiques.",
+            //'options'=>['attr'=>['class'=>'password-field']],
+            #   'required'=>false,
 
-            #->add('campus')
+            #  'first_options'=>['label'=>'Changer votre mot de passe'],
+
+            #  'second_options'=>['label'=>'Réécrivez votre nouveau mot de passe.'],
+
+
+
+            # ])
+        ;
+        #->add('administrateur')
+        #->add('actif')
+
+        #->add('campus')
 
         ;
     }

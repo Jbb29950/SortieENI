@@ -6,29 +6,21 @@
     <div class="titre_formulaire">
         <h1>Formulaire d'inscription</h1>
     </div>
-<div class="formulaire_inscription">
-    {{ form_start(registrationForm) }}
-    {{ form_row(registrationForm.nom) }}
-    {{ form_row(registrationForm.prenom) }}
-    {{ form_row(registrationForm.telephone) }}
-    {{ form_row(registrationForm.email) }}
-    <label for="campus">Campus</label>
+    <div class="formulaire_inscription">
+        {{ form_start(registrationForm) }}
+        {{ form_row(registrationForm.nom) }}
+        {{ form_row(registrationForm.prenom) }}
+        {{ form_row(registrationForm.telephone) }}
+        {{ form_row(registrationForm.email) }}
+        {{ form_row(registrationForm.campus) }}
 
-    <select id="campus" name="campus">
-
-    {% for campus in Campus %}
-
-        <option  value="{{ campus.nom }}">{{ campus.nom }}</option>
-
-    {% endfor %}
-    </select>
-    {{ form_row(registrationForm.plainPassword, {
+        {{ form_row(registrationForm.plainPassword, {
             label: 'Password'
         }) }}
 
         <div class="bouton_valider">
-        <button type="submit" class="btn">Enregistrer</button>
+            <button type="submit" class="btn">Enregistrer</button>
         </div>
-    {{ form_end(registrationForm) }}
-</div>
+        {{ form_end(registrationForm) }}
+    </div>
 {% endblock %}

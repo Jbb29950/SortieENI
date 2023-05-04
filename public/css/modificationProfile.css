@@ -62,8 +62,26 @@ form button[type="submit"] {
     padding: 10px 20px; /* rembourrage */
     font-size: 16px; /* taille de police */
     cursor: pointer; /* curseur pointer */
+
 }
 
 form button[type="submit"]:hover {
     background-color: #218838; /* couleur de fond au survol */
+}
+#modif-password{
+    margin-bottom: 20px;
+    font-size: 15px;
+    border: 1px solid blue;
+    width: 50%;
+    border-radius: 5px;
+    text-transform: none;
+    box-shadow: inset 0 2px 3px #eee; /* effet en relief */
+
+
+}
+#modif-password:hover{
+    color: white;
+    background-color: red;
+    width: 50%;
+    border-radius: 5px;
 }
