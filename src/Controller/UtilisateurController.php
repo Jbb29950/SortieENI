@@ -139,4 +139,38 @@ class UtilisateurController extends AbstractController
         ]);
     }
 
+    #[Route('/admin/participant', name: 'participant_gestion')]
+    public function gestionPartcipant(ParticipantRepository $participantRepository){
+
+        $participants = $participantRepository->findBy([], ['nom'=>'DESC']);
+
+
+        return $this->render('admin/participant.html.twig',[
+            'participants'=>$participants
+        ]);
+    }
+    #[Route('/admin/participant/desactiver/{email}', name: 'participant_gestion_desactiver')]
+    public function desactiverParticipant(EntityManagerInterface$entityManager, ParticipantRepository $participantRepository, $email){
+        $participant = $participantRepository->findOneBy(['email'=>$email]);
+        $participant->setActif(false);
+        $entityManager->persist($participant);
+        $entityManager->flush();
+
+        $participants = $participantRepository->findBy([], ['nom'=>'DESC']);
+        return $this->render('admin/participant.html.twig',[
+            'participants'=>$participants
+        ]);
+    }
+    #[Route('/admin/participant/supprimer/{email}', name: 'participant_gestion_supprimer')]
+    public function supprimerParticipant(EntityManagerInterface$entityManager, ParticipantRepository $participantRepository, $email){
+        $participant = $participantRepository->findOneBy(['email'=>$email]);
+        $entityManager->remove($participant);
+        $entityManager->flush();
+
+        $participants = $participantRepository->findBy([], ['nom'=>'DESC']);
+        return $this->render('admin/participant.html.twig',[
+            'participants'=>$participants
+        ]);
+    }
+
 }

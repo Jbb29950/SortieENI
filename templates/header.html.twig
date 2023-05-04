@@ -17,6 +17,7 @@
         <li class="nav-link"><a href="{{ path('app_login') }}" title="Se connecter">Se connecter</a></li>
     {% endif %}
     {% if is_granted('ROLE_ADMIN') %}
+        <li class="nav-link"><a href="{{ path('participant_gestion') }}" title="Gérer utilisateur">Gérer les utilisateurs</a></li>
         <li class="nav-link"><a href="{{ path('app_register') }}" title="Créer compte">Créer un compte</a></li>
         <li class="nav-link"><a href="{{ path('inscription_csv') }}" title="Importer des utilisateurs">Importer des utilisateurs</a></li>
     {% endif %}
