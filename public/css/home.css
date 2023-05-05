@@ -32,7 +32,7 @@ thead {
 
 thead th {
     padding: 12px;
-    font-size: 16px;
+    font-size: 30px;
 }
 
 /* style des cellules de la table */
@@ -111,13 +111,13 @@ td:last-child button {
 @media (max-width: 767px) {
     .formulaire_tri {
         margin-left: 50px;
-        font-size: 2px;
+        font-size: 20px;
 
 
     }
     section.affichable {
         margin-left: 400px;
-        font-size: 2px;
+        font-size: 20px;
 
 
     }
@@ -128,12 +128,12 @@ td:last-child button {
 
     .formulaire_tri {
         margin-left: 50px;
-        font-size: 2px;
+        font-size: 20px;
 
     }
     section.affichable {
         margin-left: 400px;
-        font-size: 2px;
+        font-size: 20px;
 
 
     }
