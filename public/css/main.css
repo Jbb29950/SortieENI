@@ -1,5 +1,5 @@
 nav {
-    background-color: #333;
+    background-color: #beb5b5;
     height: 50px;
 }
 
@@ -18,7 +18,7 @@ li {
 
 a {
     display: block;
-    color: #333333;
+    color: #faf8f8;
     text-decoration: #AAAAAA;
     padding: 5px 10px;
     font-size: 18px;
@@ -75,6 +75,77 @@ footer {
     height: 200px;
     padding-right: 20px;
 }
+
+/* For screens smaller than 768px (typical phone screens) */
+@media (max-width: 767px) {
+    nav {
+        height: auto;
+    }
+    ul {
+        flex-direction: column;
+        margin: 0;
+        padding: 0;
+    }
+    li {
+        margin: 0;
+        text-align: center;
+    }
+    a {
+        padding: 10px;
+    }
+    header {
+        height: auto;
+        flex-direction: column;
+        justify-content: center;
+        padding: 20px;
+    }
+    .logo {
+        position: static;
+        margin-bottom: 20px;
+    }
+    #Photo-profil{
+        width:100%;
+        height: auto;
+        padding-right: 0;
+    }
+}
+
+/* For screens larger than 768px */
+@media (min-width: 768px) {
+    nav {
+        height: 50px;
+    }
+    ul {
+        flex-direction: row;
+        margin: 10px;
+        padding: 10px;
+    }
+    li {
+        margin-right: 10px;
+        text-align: left;
+    }
+    a {
+        padding: 5px 10px;
+    }
+    header {
+        height: 90px;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 50px;
+    }
+    .logo {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+    #Photo-profil{
+        width:200px;
+        height: 200px;
+        padding-right: 20px;
+    }
+}
+
 
 
 
