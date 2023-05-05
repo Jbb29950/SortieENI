@@ -113,7 +113,7 @@ class SortieRepository extends ServiceEntityRepository
             }
             if ($filtre->organisateur) {
                 $query = $query
-                    ->andWhere('s.organisateur = :actuel')
+                    ->orWhere('s.organisateur = :actuel')
                     ->setParameter('actuel', $participant);
             }
         }
