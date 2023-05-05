@@ -96,28 +96,41 @@ class SortieRepository extends ServiceEntityRepository
                 ->setParameter('fin', $filtre->finInterval);
         }
         if(!is_null($participant)) {
-            if ($filtre->inscrit || $filtre->nonInscrit) {
-                $query = $query
-                    ->leftJoin('s.participants', 'participants');
+            $query = $query
+                ->leftJoin('s.participants', 'participants');
+
+
+            if($filtre->inscrit XOR $filtre->nonInscrit ){
+               // if (!$filtre->nonInscrit) {}
+                if ($filtre->inscrit) {
+                    $query = $query
+                        ->andWhere('participants.id LIKE :id')
+                        ->setParameter('id', $participant->getId());
+                }else{
+                    $query = $query
+                        ->andWhere(':nid NOT MEMBER OF s.participants')
+                        ->setParameter('nid', $participant->getId());
+                }
+                if ($filtre->organisateur) {
+                    $query = $query
+                        ->orWhere('s.organisateur = :actuel')
+                        ->setParameter('actuel', $participant);
+                }
+            }else {
+                if (!$filtre->inscrit || !$filtre->nonInscrit)
+                if ($filtre->organisateur) {
+                    $query = $query
+                        ->andWhere('s.organisateur = :actuel')
+                        ->setParameter('actuel', $participant);
+                    }else{
+                    $query = $query
+                        ->andWhere('s.organisateur != :actuel')
+                        ->setParameter('actuel', $participant);
+                    }
+                }
             }
 
-            if ($filtre->nonInscrit) {
-                $query = $query
-                    ->orWhere('participants.id NOT LIKE :id')
-                    ->setParameter('id', $participant->getId());
-            }
-            if ($filtre->inscrit) {
-                $query = $query
-                    ->orWhere('participants.id LIKE :id')
-                    ->setParameter('id', $participant->getId());
-            }
-            if ($filtre->organisateur) {
-                $query = $query
-                    ->orWhere('s.organisateur = :actuel')
-                    ->setParameter('actuel', $participant);
-            }
-        }
-        if (!$filtre->passe){
+                if (!$filtre->passe){
             $query = $query
                 ->andWhere('s.dateHeureDebut > :now')
                 ->setParameter('now', new \DateTime());

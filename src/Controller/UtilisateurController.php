@@ -78,6 +78,8 @@ class UtilisateurController extends AbstractController
 
                 }$user->setPhotoProfil($newFileName);
 
+
+
             }
             $entityManager -> persist($user);
             $entityManager -> flush();
