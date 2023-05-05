@@ -21,16 +21,18 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 class UtilisateurController extends AbstractController
 {
     #[Route('/utilisateur', name: 'app_utilisateur')]
-    public function editionProfil(ParticipantRepository $pr): Response
+    public function editionProfil(ParticipantRepository $pr,UserInterface $user): Response
     {
+        $user->getUserIdentifier();
         return $this -> render('utilisateur/editionProfil.html.twig', [
             'controller_name' => 'UtilisateurController',
-            'participant' => $pr -> findOneBy(['id' => $this -> getUser() -> getUserIdentifier()])
+            'participant' => $pr -> findOneBy(['email' => $this -> getUser() -> getUserIdentifier()])
 
         ]);
     }
@@ -43,7 +45,7 @@ class UtilisateurController extends AbstractController
                                    UserPasswordHasherInterface $passwordHasher): Response{
 
 
-        $user = $this -> getUser();
+        $user = $participantRepository->findOneBy(['email'=>$this->getUser()->getUserIdentifier()]);
 
         $modifierProfilForm = $this -> createForm(UpdateProfileType::class, $user);
         $modifierProfilForm -> handleRequest($request);
@@ -73,7 +75,7 @@ class UtilisateurController extends AbstractController
 
                 }$user->setPhotoProfil($newFileName);
             }
-            if ($this->getUser()->getPseudo =! $pseudo) {
+            if ($this->getUser()->getPseudo  =! $pseudo) {
 
                 if ($participantRepository -> findOneBy(['pseudo' => $pseudo])) {
                     $this -> addFlash('fail', 'Pseudo déjà utilisé');
@@ -82,6 +84,7 @@ class UtilisateurController extends AbstractController
                         'modifierProfil' => $modifierProfilForm -> createView(),
                     ]);
                 }
+
 
             }
             $entityManager -> persist($user);
