@@ -21,14 +21,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 class UtilisateurController extends AbstractController
 {
     #[Route('/utilisateur', name: 'app_utilisateur')]
-    public function editionProfil(ParticipantRepository $pr): Response
+    public function editionProfil(ParticipantRepository $pr,UserInterface $user): Response
     {
-
+        $user->getUserIdentifier();
         return $this -> render('utilisateur/editionProfil.html.twig', [
             'controller_name' => 'UtilisateurController',
             'participant' => $pr -> findOneBy(['email' => $this -> getUser() -> getUserIdentifier()])
