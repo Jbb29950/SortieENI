@@ -31,7 +31,7 @@ class UtilisateurController extends AbstractController
 
         return $this -> render('utilisateur/editionProfil.html.twig', [
             'controller_name' => 'UtilisateurController',
-            'participant' => $pr -> findOneBy(['id' => $this -> getUser() -> getUserIdentifier()])
+            'participant' => $pr -> findOneBy(['email' => $this -> getUser() -> getUserIdentifier()])
 
         ]);
     }
@@ -44,7 +44,7 @@ class UtilisateurController extends AbstractController
                                    UserPasswordHasherInterface $passwordHasher): Response{
 
 
-        $user = $this -> getUser();
+        $user = $participantRepository->findOneBy(['email'=>$this->getUser()->getUserIdentifier()]);
 
         $modifierProfilForm = $this -> createForm(UpdateProfileType::class, $user);
         $modifierProfilForm -> handleRequest($request);
@@ -74,7 +74,7 @@ class UtilisateurController extends AbstractController
 
                 }$user->setPhotoProfil($newFileName);
             }
-            if ($this->getUser()->getPseudo =! $pseudo) {
+            if ($this->getUser()->getPseudo  =! $pseudo) {
 
                 if ($participantRepository -> findOneBy(['pseudo' => $pseudo])) {
                     $this -> addFlash('fail', 'Pseudo déjà utilisé');
