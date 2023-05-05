@@ -28,6 +28,7 @@ class UtilisateurController extends AbstractController
     #[Route('/utilisateur', name: 'app_utilisateur')]
     public function editionProfil(ParticipantRepository $pr): Response
     {
+
         return $this -> render('utilisateur/editionProfil.html.twig', [
             'controller_name' => 'UtilisateurController',
             'participant' => $pr -> findOneBy(['id' => $this -> getUser() -> getUserIdentifier()])
@@ -83,13 +84,14 @@ class UtilisateurController extends AbstractController
                     ]);
                 }
 
+
             }
             $entityManager -> persist($user);
             $entityManager -> flush();
 
             $this -> addFlash('success', 'Profil modifié avec succès.');
 
-            return $this -> redirectToRoute('app_utilisateur');
+            return $this -> render('utilisateur/editionProfil.html.twig');
         }
 
         return $this -> render('utilisateur/modificationProfil.html.twig', [
