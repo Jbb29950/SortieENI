@@ -208,7 +208,7 @@ class AppFixtures extends Fixture
         $dater->setDate(2023, 5, 10);
         $dater->setTime(23, 30);
         $dofus = new Sortie();
-        $dofus->setNom("Balade au bar");
+        $dofus->setNom("Temporis Dofus");
         $dofus->setOrganisateur($choco);
         $dofus->setDuree($duree);
         $dofus->setDateHeureDebut($dater);
@@ -226,7 +226,7 @@ class AppFixtures extends Fixture
         $datee->setDate(2023, 7, 15);
         $datee->setTime(2, 00);
         $exam = new Sortie();
-        $exam->setNom("Balade au bar");
+        $exam->setNom("Les exams");
         $exam->setOrganisateur($choco);
         $exam->setDuree($duree);
         $exam->setDateHeureDebut($datee);
