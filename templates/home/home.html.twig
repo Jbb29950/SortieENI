@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %} <link rel="stylesheet" href="{{ asset('css/home.css') }}">{% endblock %}
 {% block title %}Sorties ENI{% endblock %}
-
 {% block body %}
 
     <div class="example-wrapper">
@@ -32,10 +31,11 @@
             <tr>
                 <td>{{ form_row(form.finInterval) }}</td>
                 <td>{{ form_row(form.passe) }}</td>
-                <td><button>Rechercher</button></td>
+
             </tr>
             </tbody>
         </table>
+        <button class="button">Rechercher</button>
         {{ form_end(form) }}
     </section>
 
