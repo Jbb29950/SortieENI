@@ -117,15 +117,20 @@ class SortieRepository extends ServiceEntityRepository
                         ->setParameter('actuel', $participant);
                 }
             }else {
-                if (!$filtre->organisateur) {
+                if (!$filtre->inscrit || !$filtre->nonInscrit)
+                if ($filtre->organisateur) {
+                    $query = $query
+                        ->andWhere('s.organisateur = :actuel')
+                        ->setParameter('actuel', $participant);
+                    }else{
                     $query = $query
                         ->andWhere('s.organisateur != :actuel')
                         ->setParameter('actuel', $participant);
                     }
                 }
-
             }
-        if (!$filtre->passe){
+
+                if (!$filtre->passe){
             $query = $query
                 ->andWhere('s.dateHeureDebut > :now')
                 ->setParameter('now', new \DateTime());

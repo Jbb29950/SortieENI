@@ -176,8 +176,9 @@ class AppFixtures extends Fixture
         $balade->setDateHeureDebut($datet);
         $balade->setLieu($parccher);
         $balade->setEtat($enCreation);
-        $datet->setDate(2023, 5, 15);
-        $balade->setDateLimiteInscription($datet);
+        $datett = new \DateTime();
+        $datett->setDate(2023, 5, 15);
+        $balade->setDateLimiteInscription($datett);
         $balade->addParticipant($choco);
         $balade->addParticipant($citron);
         $balade->addParticipant($fraise);
@@ -198,8 +199,9 @@ class AppFixtures extends Fixture
         $picole->setLieu($barherb);
         $picole->setEtat($ouvert);
         $picole->setCampus($campus2);
-        $datet->setDate(2023, 6, 15);
-        $picole->setDateLimiteInscription($datet);
+        $datett = new \DateTime();
+        $datett->setDate(2023, 6, 15);
+        $picole->setDateLimiteInscription($datett);
         $picole->setNbInscriptionsMax(200);
         $picole->setInfosSortie('Il va faire chaud mais il n\'y aura pas d\'eau');
         $manager->persist($picole);
@@ -208,7 +210,7 @@ class AppFixtures extends Fixture
         $dater->setDate(2023, 5, 10);
         $dater->setTime(23, 30);
         $dofus = new Sortie();
-        $dofus->setNom("Balade au bar");
+        $dofus->setNom("Temporis Dofus");
         $dofus->setOrganisateur($choco);
         $dofus->setDuree($duree);
         $dofus->setDateHeureDebut($dater);
@@ -216,8 +218,9 @@ class AppFixtures extends Fixture
         $dofus->addParticipant($choco);
         $dofus->setEtat($ferme);
         $dofus->setCampus($campus2);
-        $dater->setDate(2023, 5, 1);
-        $dofus->setDateLimiteInscription($dater);
+        $daterr = new \DateTime();
+        $daterr->setDate(2023, 5, 1);
+        $dofus->setDateLimiteInscription($daterr);
         $dofus->setNbInscriptionsMax(200);
         $dofus->setInfosSortie('On va rater notre diplôme');
         $manager->persist($dofus);
@@ -226,7 +229,7 @@ class AppFixtures extends Fixture
         $datee->setDate(2023, 7, 15);
         $datee->setTime(2, 00);
         $exam = new Sortie();
-        $exam->setNom("Balade au bar");
+        $exam->setNom("Les exams");
         $exam->setOrganisateur($choco);
         $exam->setDuree($duree);
         $exam->setDateHeureDebut($datee);
@@ -236,8 +239,9 @@ class AppFixtures extends Fixture
         $exam->addParticipant($fraise);
         $exam->setEtat($ouvert);
         $exam->setCampus($campus2);
-        $datee->setDate(2023, 7, 1);
-        $exam->setDateLimiteInscription($datee);
+        $dateee = new \DateTime();
+        $dateee->setDate(2023, 7, 1);
+        $exam->setDateLimiteInscription($dateee);
         $exam->setNbInscriptionsMax(200);
         $exam->setInfosSortie('On va rater notre diplôme le retour');
         $manager->persist($exam);
