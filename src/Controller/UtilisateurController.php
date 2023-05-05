@@ -91,7 +91,7 @@ class UtilisateurController extends AbstractController
 
             $this -> addFlash('success', 'Profil modifié avec succès.');
 
-            return $this -> render('utilisateur/editionProfil.html.twig');
+            return $this -> redirectToRoute('app_utilisateur');
         }
 
         return $this -> render('utilisateur/modificationProfil.html.twig', [
