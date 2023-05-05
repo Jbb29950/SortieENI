@@ -58,8 +58,11 @@ class UtilisateurController extends AbstractController
             $photoFile = $modifierProfilForm ->get('photo_profil') -> getData();
 
             $plainpassword = $modifierProfilForm->get('password')->getData();
-            $mdp = $passwordHasher->hashPassword($user,$plainpassword);
-            $user->setPassword($mdp);
+            if(!is_null($plainpassword)){
+                $mdp = $passwordHasher->hashPassword($user,$plainpassword);
+                $user->setPassword($mdp);
+            }
+
             if($photoFile) {
 
                 $originalFileName = pathinfo($photoFile->getClientOriginalName(),PATHINFO_FILENAME);
@@ -74,17 +77,6 @@ class UtilisateurController extends AbstractController
                 catch (FileException $e){
 
                 }$user->setPhotoProfil($newFileName);
-            }
-            if ($this->getUser()->getPseudo  =! $pseudo) {
-
-                if ($participantRepository -> findOneBy(['pseudo' => $pseudo])) {
-                    $this -> addFlash('fail', 'Pseudo déjà utilisé');
-                    return $this -> render('utilisateur/modificationProfil.html.twig', [
-
-                        'modifierProfil' => $modifierProfilForm -> createView(),
-                    ]);
-                }
-
 
             }
             $entityManager -> persist($user);
