@@ -7,7 +7,12 @@
     <section class="container_profil">
         <h1 class="titre_profil">Modification du profil de {{ app.user.nom }} {{ app.user.prenom }}</h1>
         {{ form_start(modifierProfil) }}
-        {{ form_widget(modifierProfil) }}
+
+        {{form_widget(modifierProfil) }}
+
+
+
+
         <!--<label for="photo_profil">Ajouter votre photo</label>
         <input type="file" name="photo_profil">-->
 <a  id="modif-password" href="{{ path('forgotten_password') }}">Changez votre mot de passe.</a>
