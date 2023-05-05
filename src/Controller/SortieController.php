@@ -168,7 +168,7 @@ class SortieController extends AbstractController
         $affichables = $sortieRepository->trouverAffichable($filtre, $participant);
         $ferme = $etatRepository->findOneBy(['libelle'=>'Fermé']);
 
-        $index = 0;
+        //$index = 0;
         foreach ($affichables as $sortie) {
             assert($sortie instanceof Sortie);
             if ($sortie->getDateLimiteInscription() < new \DateTime() && $sortie->getEtat()->getLibelle() != 'Fermé'){
@@ -176,12 +176,12 @@ class SortieController extends AbstractController
                 $entityManager->persist($sortie);
                 $entityManager->flush();
             }
-            if(!$filtre->inscrit){
-                if(in_array($participant, $sortie->getParticipants()->getValues())){
-                    unset($affichables[$index]);
-                }
-                $index = $index + 1;
-            }
+           // if(!$filtre->inscrit){
+            //    if(in_array($participant, $sortie->getParticipants()->getValues())){
+            //        unset($affichables[$index]);
+            //    }
+            //    $index = $index + 1;
+            //}
         }
 
         return $this->render('home/home.html.twig', [
