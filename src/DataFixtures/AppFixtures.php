@@ -178,6 +178,10 @@ class AppFixtures extends Fixture
         $balade->setEtat($enCreation);
         $datet->setDate(2023, 5, 15);
         $balade->setDateLimiteInscription($datet);
+        $balade->addParticipant($choco);
+        $balade->addParticipant($citron);
+        $balade->addParticipant($fraise);
+        $balade->addParticipant($pomme);
         $balade->setCampus($campus1);
         $balade->setNbInscriptionsMax(10);
         $balade->setInfosSortie('Il va faire chaud préparez de l\'eau');
